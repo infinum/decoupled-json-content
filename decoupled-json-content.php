@@ -11,7 +11,7 @@
  * Plugin URI:        https://infinum.co/
  * Description:       Main API functionality of the Decoupled_Json_Content site. If you disable this, the site won't function. Hosts all the backend functionality for the React front at decoupled_json_content.com
  * Version:           1.0.0
- * Author:            Decoupled_Json_Content Team
+ * Author:            Infinum WordPress Team
  * Author URI:        https://infinum.co/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -50,18 +50,6 @@ define( 'DJC_PLUGIN_NAME', 'decoupled-json-content' );
  * @package decoupled_json_content
  */
 include_once( 'lib/autoloader.php' );
-
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-activator.php
- *
- * @since 1.0.0
- */
-function activate() {
-  Includes\Activator::activate();
-}
-
-register_activation_hook( __FILE__, __NAMESPACE__ . '\\activate' );
 
 /**
  * The code that runs during plugin deactivation.

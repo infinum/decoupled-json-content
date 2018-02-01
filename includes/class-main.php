@@ -124,7 +124,6 @@ class Main {
     $api_settings_page = new Admin\Api_Settings_Page( $this->get_plugin_info() );
 
     // Admin.
-    // $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_styles', 50 );.
     $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts' );
 
     $this->loader->add_action( 'manage_pages_custom_column', $admin, 'add_admin_columns_content', 10, 2 );

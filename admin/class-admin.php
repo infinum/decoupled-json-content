@@ -68,19 +68,6 @@ class Admin {
   }
 
   /**
-   * Register the Stylesheets for the admin area.
-   *
-   * @since 1.0.0
-   */
-  public function enqueue_styles() {
-
-    $main_style = '/skin/public/styles/djc-application.css';
-    wp_register_style( $this->plugin_name . '-style', plugin_dir_url( __DIR__ ) . $main_style, array(), $this->general_helper->get_assets_version( $main_style ) );
-    wp_enqueue_style( $this->plugin_name . '-style' );
-
-  }
-
-  /**
    * Register the JavaScript for the admin area.
    *
    * @since 1.0.0
