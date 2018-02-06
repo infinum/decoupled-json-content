@@ -37,6 +37,24 @@ class Api_Settings_Page {
   protected $plugin_version;
 
   /**
+   * Settings page main page slug
+   *
+   * @var string
+   *
+   * @since 1.0.0
+   */
+  protected $settings_page_main_slug = 'api-settings';
+
+  /**
+   * Settings page rebuild page slug
+   *
+   * @var string
+   *
+   * @since 1.0.0
+   */
+  protected $settings_page_rebuild_slug = 'api-settings-rebuild';
+
+  /**
    * Initialize class
    *
    * @param array $plugin_info Load global theme info.
@@ -59,24 +77,24 @@ class Api_Settings_Page {
       esc_html__( 'API Settings', 'decoupled_json_content' ),
       esc_html__( 'API Settings', 'decoupled_json_content' ),
       'manage_options',
-      'api-settings'
+      $this->settings_page_main_slug
     );
 
     add_submenu_page(
-      'api-settings',
+      $this->settings_page_main_slug,
       esc_html__( 'APIs List', 'decoupled_json_content' ),
       esc_html__( 'APIs List', 'decoupled_json_content' ),
       'manage_options',
-      'api-settings',
+      $this->settings_page_main_slug,
       array( $this, 'get_settings_page_list' )
     );
 
     add_submenu_page(
-      'api-settings',
+      $this->settings_page_main_slug,
       esc_html__( 'Rebuild Cache', 'decoupled_json_content' ),
       esc_html__( 'Rebuild Cache', 'decoupled_json_content' ),
       'manage_options',
-      'api-settings-rebuild',
+      $this->settings_page_rebuild_slug,
       array( $this, 'get_settings_page_rebuild' )
     );
   }
@@ -89,17 +107,33 @@ class Api_Settings_Page {
    * @since 1.0.0
    */
   public function get_api_endpoints_list() {
-    return array(
-        array(
-            'title' => 'Page per slug',
-            'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/page/rest-routes/page.php?slug=&type=',
-        ),
-        array(
-            'title' => 'Menus',
-            'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/menu/rest-routes/menu.php',
-        ),
+    $default_endpoints = array(
+      array(
+          'title' => 'Page per slug',
+          'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/page/rest-routes/page.php?slug=&type=',
+          'note' => wp_kses_post( 'Transient data is set on post/page/custom_post_type save. <br/>Cache updated on post/page/custom_post_type save or on rebuild button on this <a href="' . get_home_url() . '/wp-admin/admin.php?page=' . $this->settings_page_rebuild_slug . '">link.</a>', 'decoupled_json_content' )
+      ),
+      array(
+          'title' => 'Menus',
+          'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/menu/rest-routes/menu.php',
+          'note' => wp_kses_post( 'Transient data is set on admin init. <br/>Cache updated on Menu update.', 'decoupled_json_content' )
+      )
     );
+
+    // Allow developers to add new items to list.
+    if( has_filter( 'djc_append_endpoints_list' ) ) {
+      $appended_endpoints = apply_filters( 'djc_append_endpoints_list', $default_endpoints );
+
+      // Appended Items must be multidimensional array.
+      if ( is_array( $appended_endpoints ) ) {
+        $default_endpoints = array_merge( $default_endpoints, $appended_endpoints );
+      }
+    }
+
+
+    return $default_endpoints;
   }
+  
 
   /**
    * Get template view from partial file for list page.

@@ -37,6 +37,7 @@ Three hooks are available:
 * `djc_set_page_template` - append page template to page json
 * `djc_set_custom_fields` - append custom fields to json
 * `djc_set_allowed_post_types` - set post types you want to use. Default is 'post', 'page'. Must return array.
+* `djc_append_endpoints_list` - append data to default endpoints list to show on API's List setting page. Must be multidimensional array with tile and url key.
 
 ## More details
 Check this blog post:

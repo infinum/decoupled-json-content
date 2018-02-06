@@ -15,11 +15,17 @@
   <?php if ( ! empty( $list ) ) { ?>
     <ul>
       <?php foreach ( $list as $list_item ) { ?>
-        <li>
-          <a href="<?php echo esc_url( $list_item['url'] ); ?>" target="_blank" rel="noopener noreferrer"> 
-            <?php echo esc_html( $list_item['title'] ); ?>
-          </a>
-        </li>
+        <?php if ( ! empty( $list_item['url'] && $list_item['title'] ) ) { ?>
+          <li>
+            <a href="<?php echo esc_url( $list_item['url'] ); ?>" target="_blank" rel="noopener noreferrer"> 
+              <?php echo wp_kses_post( $list_item['title'] ); ?>
+            </a>
+            <?php if ( ! empty( $list_item['note'] ) ) { ?>
+              <br/>
+              <small><?php echo wp_kses_post( $list_item['note'] ); ?></small>
+            <?php } ?>
+          </li>
+        <?php } ?>
       <?php } ?>
     </ul>
   <?php } ?>
