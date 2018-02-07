@@ -33,9 +33,10 @@ TODO
 Three hooks are available:
 * `djc_set_menu_positions` - set all menu position avaiable on you page and endpoint will be set. Must return array.
 * `djc_set_posts_slug` - change page slug for your blog posts. Default is 'blog'
-* `djc_set_post_format` - append post format to post json
-* `djc_set_page_template` - append page template to page json
-* `djc_set_custom_fields` - append custom fields to json
+* `djc_set_post_format` - override post format to post json
+* `djc_set_page_template` - override page template to page json
+* `djc_set_custom_fields` - override custom fields to json
+* `djc_set_post_append` - append new data to json. Must be array with key and value.
 * `djc_set_allowed_post_types` - set post types you want to use. Default is 'post', 'page'. Must return array.
 * `djc_append_endpoints_list` - append data to default endpoints list to show on API's List setting page. Must be multidimensional array with tile and url key.
 

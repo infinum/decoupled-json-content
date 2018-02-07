@@ -167,14 +167,33 @@ class Page {
       while ( $the_query->have_posts() ) {
         $the_query->the_post();
         $post_id = $the_query->post->ID;
+        $page_output = (array)$the_query->post;
 
-        $the_query->post->format = apply_filters( 'djc_set_post_format', $this->get_post_format( $post_id ) );
+        $custom_fields = apply_filters( 'djc_set_custom_fields', $this->get_custom_fields( $post_id ) );
+        if( $custom_fields !== false ) {
+          $page_output['custom_fields'] = $custom_fields;
+        }
+        
+        $template = apply_filters( 'djc_set_page_template', $this->get_page_template( $post_id ) );
+        if( $template !== false ) {
+          $page_output['template'] = $template;
+        }
+        
+        $format = apply_filters( 'djc_set_post_format', $this->get_post_format( $post_id ) );
+        if( $format !== false ) {
+          $page_output['format'] = $format;
+        }
 
-        $the_query->post->template = apply_filters( 'djc_set_page_template', $this->get_page_template( $post_id ) );
+        // Allow developers to add new items to list.
+        if( has_filter( 'djc_set_post_append' ) ) {
+          $appended_key = apply_filters( 'djc_set_post_append', $page_output );
 
-        $the_query->post->custom_fields = apply_filters( 'djc_set_custom_fields', $this->get_custom_fields( $post_id ) );
+          // Must be array.
+          if ( is_array( $appended_key ) ) {
+            $page_output = array_merge( $page_output, $appended_key );
+          }
+        }
 
-        $page_output = $the_query->post;
       }
       wp_reset_postdata();
     }
