@@ -5,11 +5,9 @@
   "private": true,
   "main": "",
   "scripts": {
-    "__stylelintPlugin": "stylelint \"skin/**/*.scss\" --syntax scss",
     "__eslintPlugin": "eslint skin/assets/",
-    "precommitCss": "npm run __stylelintPlugin",
     "precommitJs": "npm run __eslintPlugin",
-    "precommit": "npm run precommitJs && npm run precommitCss",
+    "precommit": "npm run precommitJs",
     "start": "webpack --progress --watch --display-error-details --display-reasons",
     "package": "bin/package.js",
     "build": "NODE_ENV=production webpack --progress && npm run package"
@@ -21,7 +19,6 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "clean-webpack-plugin": "^0.1.17",
-    "css-loader": "^0.28.8",
     "eslint": "^4.15.0",
     "eslint-plugin-import": "^2.8.0",
     "expose-loader": "^0.7.4",
