@@ -62,8 +62,8 @@ class Api_Settings_Page {
    * @since 1.0.0
    */
   public function __construct( $plugin_info = null ) {
-    $this->plugin_name     = $plugin_info['plugin_name'];
-    $this->plugin_version  = $plugin_info['plugin_version'];
+    $this->plugin_name    = $plugin_info['plugin_name'];
+    $this->plugin_version = $plugin_info['plugin_version'];
   }
 
   /**
@@ -133,7 +133,7 @@ class Api_Settings_Page {
 
     return $default_endpoints;
   }
-  
+
 
   /**
    * Get template view from partial file for list page.

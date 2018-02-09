@@ -50,8 +50,8 @@ class Page {
    * @since 1.0.0
    */
   public function __construct( $plugin_info = null ) {
-    $this->plugin_name     = $plugin_info['plugin_name'];
-    $this->plugin_version  = $plugin_info['plugin_version'];
+    $this->plugin_name    = $plugin_info['plugin_name'];
+    $this->plugin_version = $plugin_info['plugin_version'];
   }
 
   /**
@@ -173,12 +173,12 @@ class Page {
         if( $custom_fields !== false ) {
           $page_output['custom_fields'] = $custom_fields;
         }
-        
+
         $template = apply_filters( 'djc_set_page_template', $this->get_page_template( $post_id ) );
         if( $template !== false ) {
           $page_output['template'] = $template;
         }
-        
+
         $format = apply_filters( 'djc_set_post_format', $this->get_post_format( $post_id ) );
         if( $format !== false ) {
           $page_output['format'] = $format;

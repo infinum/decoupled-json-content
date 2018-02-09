@@ -5,8 +5,6 @@ const DEV = process.env.NODE_ENV !== 'production';
 const path = require('path');
 const webpack = require('webpack');
 
-const jQuery = require.resolve('jquery');
-
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -19,13 +17,10 @@ const pluginPublicPath = `${pluginPath}/public/`;
 const pluginEntry = `${pluginFullPath}/assets/application.js`;
 const pluginOutput = `${pluginFullPath}/public`;
 
-
 // Outputs
 const outputJs = 'scripts/[name].js';
 const outputCss = 'styles/[name].css';
 const outputFile = '[name].[ext]';
-const outputImages = `images/${outputFile}`;
-const outputFonts = `fonts/${outputFile}`;
 
 const allModules = {
   rules: [
@@ -39,47 +34,11 @@ const allModules = {
       exclude: /node_modules/,
       use: 'file-loader',
     },
-    {
-      test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
-      exclude: [/fonts/, /node_modules/],
-      use: `file-loader?name=${outputImages}`,
-    },
-    {
-      test: /\.(eot|otf|ttf|woff|woff2|svg)$/,
-      exclude: [/images/, /node_modules/],
-      use: `file-loader?name=${outputFonts}`,
-    },
-    {
-      test: /\.scss$/,
-      exclude: /node_modules/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: ['css-loader', 'postcss-loader', 'sass-loader'],
-      }),
-    },
-    {
-
-      // Exposes jQuery for use outside Webpack build.
-      test: jQuery,
-      use: [{
-        loader: 'expose-loader',
-        options: 'jQuery',
-      },
-      {
-        loader: 'expose-loader',
-        options: '$',
-      }],
-    },
   ],
 };
 
 const allPlugins = [
   new ExtractTextPlugin(outputCss),
-
-  new webpack.ProvidePlugin({
-    $: 'jquery',
-    jQuery: 'jquery',
-  }),
 
   new webpack.DefinePlugin({
     'process.env': {
