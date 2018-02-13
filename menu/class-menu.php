@@ -155,7 +155,7 @@ class Menu {
       $url = rtrim( $url, '/' );
 
       // Remove first slash.
-      if( ! $prefix_slash ) {
+      if( $prefix_slash ) {
         $url = ltrim( $url, '/' );
       }
 
