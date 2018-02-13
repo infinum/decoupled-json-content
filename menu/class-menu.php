@@ -146,6 +146,7 @@ class Menu {
       // Remove absolute url.
       $url = str_replace( get_home_url(), '', $menu_item->url );
 
+      // Append post prefix if type is post.
       if ( $menu_item->object === 'post' ) {
         $url = '/' . $this->get_default_posts_slug() . $url;
       }
