@@ -6,7 +6,6 @@ const path = require('path');
 const webpack = require('webpack');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const appPath = `${path.resolve(__dirname)}`;
 
@@ -19,8 +18,6 @@ const pluginOutput = `${pluginFullPath}/public`;
 
 // Outputs
 const outputJs = 'scripts/[name].js';
-const outputCss = 'styles/[name].css';
-const outputFile = '[name].[ext]';
 
 const allModules = {
   rules: [
@@ -38,8 +35,6 @@ const allModules = {
 };
 
 const allPlugins = [
-  new ExtractTextPlugin(outputCss),
-
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
