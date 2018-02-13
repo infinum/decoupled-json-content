@@ -8,5 +8,7 @@
 
 // If uninstall not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-    exit;
+  exit;
+  // Clear all the existing and registered tranisents - probably try to keep a record of all existing
+  // and registered transients with this plugin.
 }

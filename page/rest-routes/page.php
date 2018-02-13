@@ -20,9 +20,9 @@ $page = new Page();
 $general_helper = new General_Helpers\General_Helper();
 
 // Check input and protect it.
-if ( ( isset( $_GET['slug'] ) || ! empty( $_GET['slug'] ) ) && ( isset( $_GET['type'] ) || ! empty( $_GET['type'] ) ) ) {
-  $post_slug = htmlentities( trim( $_GET['slug'] ), ENT_QUOTES );
-  $post_type = htmlentities( trim( $_GET['type'] ), ENT_QUOTES );
+if ( ( isset( $_GET['slug'] ) || ! empty( $_GET['slug'] ) ) && ( isset( $_GET['type'] ) || ! empty( $_GET['type'] ) ) ) { // WPCS: XSS ok, sanitization ok, CSRF ok.
+  $post_slug = htmlentities( trim( $_GET['slug'] ), ENT_QUOTES ); // WPCS: XSS ok, sanitization ok, CSRF ok.
+  $post_type = htmlentities( trim( $_GET['type'] ), ENT_QUOTES ); // WPCS: XSS ok, sanitization ok, CSRF ok.
 } else {
   wp_send_json( $general_helper->set_msg_array( 'error', 'Error, page slug or type is missing!' ) );
 }
