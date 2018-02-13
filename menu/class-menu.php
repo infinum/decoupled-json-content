@@ -141,7 +141,7 @@ class Menu {
     foreach ( $menu_items as $menu_item ) {
 
       // Filter hook to remove prefix slash.
-      $prefix_slash = apply_filters( 'djc_remove_menu_prefix_slah', true );
+      $prefix_slash = apply_filters( 'djc_remove_menu_prefix_slash', true );
 
       // Remove absolute url.
       $url = str_replace( get_home_url(), '', $menu_item->url );
