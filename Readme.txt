@@ -45,6 +45,7 @@ We included several hooks that you can use to extend the functionality of the pl
 * `djc_set_posts_slug` - change the page slug for your blog posts. Default is 'blog'
 * `djc_set_featured_image` - override the post featured image for post json
 * `djc_set_tags` - override the post tags for post json
+* `djc_set_category` - override the post category for post json
 * `djc_set_post_format` - override the post format for post json
 * `djc_set_page_template` - override the page template for page json
 * `djc_set_custom_fields` - override the custom fields to json
