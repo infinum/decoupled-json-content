@@ -217,9 +217,10 @@ class Page {
   }
 
   /**
-   * Return post tags specific post/page
+   * Return post tags for specific post/page
    *
-   * @param int $post_id Page/Post ID.
+   * @param int $post_id      Page/Post ID.
+   * @param string $post_type Type.
    * @return string
    *
    * @since 1.0.0
@@ -237,9 +238,10 @@ class Page {
   }
 
   /**
-   * Return post category specific post/page
+   * Return post category for specific post/page
    *
-   * @param int $post_id Page/Post ID.
+   * @param int $post_id      Page/Post ID.
+   * @param string $post_type Type.
    * @return string
    *
    * @since 1.0.0
@@ -269,6 +271,7 @@ class Page {
       return;
     }
 
+    // Get all registered image sizes.
     $image_sizes = get_intermediate_image_sizes();
 
     $featured_image = array();
@@ -314,7 +317,8 @@ class Page {
   /**
    * Return page template for specific post/page
    *
-   * @param int $post_id Page/Post ID.
+   * @param int $post_id      Page/Post ID.
+   * @param string $post_type Type.
    * @return string
    *
    * @since 1.0.0
