@@ -140,16 +140,32 @@ class Menu {
     $menu_items_oputput = array();
     foreach ( $menu_items as $menu_item ) {
 
-      // Remove absolute url and add prefix for blog on posts.
-      $url = rtrim( str_replace( get_home_url(), '', $menu_item->url ), '/' );
+      // Filter hook to remove prefix slash.
+      $prefix_slash = apply_filters( 'djc_remove_menu_prefix_slah', true );
+
+      // Remove absolute url.
+      $url = str_replace( get_home_url(), '', $menu_item->url );
+
       if ( $menu_item->object === 'post' ) {
         $url = '/' . $this->get_default_posts_slug() . $url;
       }
+
+      // Remove last slash.
+      $url = rtrim( $url, '/' );
+
+      // Remove first slash.
+      if( ! $prefix_slash ) {
+        $url = ltrim( $url, '/' );
+      }
+
+      // Expolode url to get last item.
+      $slug = end( explode( '/', $url ) );
 
       $menu_items_oputput[] = array(
           'id'          => $menu_item->ID,
           'title'       => $menu_item->title,
           'url'         => $url,
+          'slug'        => $slug,
           'parent'      => (int) $menu_item->menu_item_parent,
           'target'      => $menu_item->target === '_blank',
           'attr_title'  => $menu_item->attr_title,
