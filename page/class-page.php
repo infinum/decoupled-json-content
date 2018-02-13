@@ -167,14 +167,30 @@ class Page {
       while ( $the_query->have_posts() ) {
         $the_query->the_post();
         $post_id = $the_query->post->ID;
+        $post_type = $the_query->post->post_type;
         $page_output = (array) $the_query->post;
+
+        $featured_image = apply_filters( 'djc_set_featured_image', $this->get_featured_image( $post_id ) );
+        if ( $featured_image !== false ) {
+          $page_output['featured_image'] = $featured_image;
+        }
+
+        $tags = apply_filters( 'djc_set_tags', $this->get_tags( $post_id, $post_type ) );
+        if ( $tags !== false ) {
+          $page_output['tags'] = $tags;
+        }
+
+        $category = apply_filters( 'djc_set_category', $this->get_category( $post_id, $post_type ) );
+        if ( $category !== false ) {
+          $page_output['category'] = $category;
+        }
 
         $custom_fields = apply_filters( 'djc_set_custom_fields', $this->get_custom_fields( $post_id ) );
         if ( $custom_fields !== false ) {
           $page_output['custom_fields'] = $custom_fields;
         }
 
-        $template = apply_filters( 'djc_set_page_template', $this->get_page_template( $post_id ) );
+        $template = apply_filters( 'djc_set_page_template', $this->get_page_template( $post_id, $post_type ) );
         if ( $template !== false ) {
           $page_output['template'] = $template;
         }
@@ -198,6 +214,69 @@ class Page {
     }
 
     return $page_output;
+  }
+
+  /**
+   * Return post tags specific post/page
+   *
+   * @param int $post_id Page/Post ID.
+   * @return string
+   *
+   * @since 1.0.0
+   */
+  public function get_tags( $post_id = null, $post_type = null  ) {
+    if ( ! $post_id && $post_type ) {
+      return;
+    }
+
+    if( $post_type !== 'post' ) {
+      return false;
+    }
+
+    return wp_get_post_tags( $post_id );
+  }
+
+  /**
+   * Return post category specific post/page
+   *
+   * @param int $post_id Page/Post ID.
+   * @return string
+   *
+   * @since 1.0.0
+   */
+  public function get_category( $post_id = null, $post_type = null  ) {
+    if ( ! $post_id && $post_type ) {
+      return;
+    }
+
+    if( $post_type !== 'post' ) {
+      return false;
+    }
+
+    return wp_get_post_tags( $post_id );
+  }
+
+  /**
+   * Return post featured image with all sizes for specific post/page
+   *
+   * @param int $post_id Page/Post ID.
+   * @return string
+   *
+   * @since 1.0.0
+   */
+  public function get_featured_image( $post_id = null ) {
+    if ( ! $post_id ) {
+      return;
+    }
+
+    $image_sizes = get_intermediate_image_sizes();
+
+    $featured_image = array();
+    foreach( $image_sizes as $image_size ) {
+      $featured_image[ $image_size ] = get_the_post_thumbnail_url( $post_id, $image_size );
+    }
+
+    return $featured_image;
   }
 
   /**
@@ -240,18 +319,25 @@ class Page {
    *
    * @since 1.0.0
    */
-  public function get_page_template( $post_id = null ) {
-    if ( ! $post_id ) {
+  public function get_page_template( $post_id = null, $post_type = null ) {
+    if ( ! $post_id && $post_type ) {
       return;
     }
 
-    $template = '';
-
+    // Return ony for pages.
     if ( $post_type === 'page' ) {
       $template = get_page_template_slug( $post_id );
+
+      // IF template is default or no custom template is available.
+      if( empty( $template ) ) {
+        return 'default';
+      }
+
+      // Return template name without extension.
+      return rtrim( $template, '.php' );
     }
 
-    return $template;
+    return false;
   }
 
   /**
