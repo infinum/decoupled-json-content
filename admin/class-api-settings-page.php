@@ -108,20 +108,20 @@ class Api_Settings_Page {
    */
   public function get_api_endpoints_list() {
     $default_endpoints = array(
-      array(
-          'title' => 'Page per slug',
-          'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/page/rest-routes/page.php?slug=&type=',
-          'note' => wp_kses_post( 'Transient data is set on post/page/custom_post_type save. <br/>Cache updated on post/page/custom_post_type save or on rebuild button on this <a href="' . get_home_url() . '/wp-admin/admin.php?page=' . $this->settings_page_rebuild_slug . '">link.</a>', 'decoupled_json_content' )
-      ),
-      array(
-          'title' => 'Menus',
-          'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/menu/rest-routes/menu.php',
-          'note' => wp_kses_post( 'Transient data is set on admin init. <br/>Cache updated on Menu update.', 'decoupled_json_content' )
-      )
+        array(
+            'title' => 'Page per slug',
+            'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/page/rest-routes/page.php?slug=&type=',
+            'note' => wp_kses_post( 'Transient data is set on post/page/custom_post_type save. <br/>Cache updated on post/page/custom_post_type save or on rebuild button on this <a href="' . get_home_url() . '/wp-admin/admin.php?page=' . $this->settings_page_rebuild_slug . '">link.</a>', 'decoupled_json_content' ),
+        ),
+        array(
+            'title' => 'Menus',
+            'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/menu/rest-routes/menu.php',
+            'note' => wp_kses_post( 'Transient data is set on admin init. <br/>Cache updated on Menu update.', 'decoupled_json_content' ),
+        ),
     );
 
     // Allow developers to add new items to list.
-    if( has_filter( 'djc_append_endpoints_list' ) ) {
+    if ( has_filter( 'djc_append_endpoints_list' ) ) {
       $appended_endpoints = apply_filters( 'djc_append_endpoints_list', $default_endpoints );
 
       // Appended Items must be multidimensional array.
@@ -129,7 +129,6 @@ class Api_Settings_Page {
         $default_endpoints = array_merge( $default_endpoints, $appended_endpoints );
       }
     }
-
 
     return $default_endpoints;
   }

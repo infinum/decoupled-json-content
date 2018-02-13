@@ -155,10 +155,10 @@ class Page {
 
     $page_output = '';
     $args = array(
-        'name' => $post_slug,
-        'post_type' => $post_type,
+        'name'           => $post_slug,
+        'post_type'      => $post_type,
         'posts_per_page' => 1,
-        'no_found_rows' => true,
+        'no_found_rows'  => true,
     );
 
     $the_query = new \WP_Query( $args );
@@ -167,25 +167,25 @@ class Page {
       while ( $the_query->have_posts() ) {
         $the_query->the_post();
         $post_id = $the_query->post->ID;
-        $page_output = (array)$the_query->post;
+        $page_output = (array) $the_query->post;
 
         $custom_fields = apply_filters( 'djc_set_custom_fields', $this->get_custom_fields( $post_id ) );
-        if( $custom_fields !== false ) {
+        if ( $custom_fields !== false ) {
           $page_output['custom_fields'] = $custom_fields;
         }
 
         $template = apply_filters( 'djc_set_page_template', $this->get_page_template( $post_id ) );
-        if( $template !== false ) {
+        if ( $template !== false ) {
           $page_output['template'] = $template;
         }
 
         $format = apply_filters( 'djc_set_post_format', $this->get_post_format( $post_id ) );
-        if( $format !== false ) {
+        if ( $format !== false ) {
           $page_output['format'] = $format;
         }
 
         // Allow developers to add new items to list.
-        if( has_filter( 'djc_set_post_append' ) ) {
+        if ( has_filter( 'djc_set_post_append' ) ) {
           $appended_key = apply_filters( 'djc_set_post_append', $page_output );
 
           // Must be array.
@@ -193,7 +193,6 @@ class Page {
             $page_output = array_merge( $page_output, $appended_key );
           }
         }
-
       }
       wp_reset_postdata();
     }
@@ -357,7 +356,7 @@ class Page {
       $allowed_types = $this->get_allowed_post_types();
 
       $args = array(
-          'post_type' => $allowed_types,
+          'post_type'      => $allowed_types,
           'posts_per_page' => 5000,
       );
 

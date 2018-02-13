@@ -1,15 +1,15 @@
 <?php
 /**
- * Plugin main file starting point
+ * Plugin main file
  *
  * @link              https://infinum.co/
  * @since             1.0.0
  * @package           decoupled_json_content
  *
  * @wordpress-plugin
- * Plugin Name:       Decoupled Json Content
+ * Plugin Name:       Decoupled JSON Content
  * Plugin URI:        https://infinum.co/
- * Description:       Main API functionality of the Decoupled_Json_Content site. If you disable this, the site won't function. Hosts all the backend functionality for the React front at decoupled_json_content.com
+ * Description:       A faster alternative to the default REST API provided by WordPress for the usage with decoupled (headless) WordPress approach
  * Version:           1.0.0
  * Author:            Infinum WordPress Team
  * Author URI:        https://infinum.co/
@@ -28,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Plugins version global
+ * Plugin version global
  *
  * @since 1.0.0
  * @package decoupled_json_content
@@ -36,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'DJC_PLUGIN_VERSION', '1.0.0' );
 
 /**
- * Plugins name global
+ * Plugin name global
  *
  * @since 1.0.0
  * @package decoupled_json_content

@@ -14,5 +14,5 @@ if ( ! isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
   return;
 }
 
-$parse_uri = explode( 'wp-content', sanitize_text_field( wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) ) );
+$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] ); // WPCS: XSS ok, sanitization ok.
 require_once( $parse_uri[0] . 'wp-load.php' );
