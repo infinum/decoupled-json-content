@@ -219,43 +219,43 @@ class Page {
   /**
    * Return post tags for specific post/page
    *
-   * @param int $post_id      Page/Post ID.
+   * @param int    $post_id      Page/Post ID.
    * @param string $post_type Type.
    * @return string
    *
    * @since 1.0.0
    */
-  public function get_tags( $post_id = null, $post_type = null  ) {
-    if ( ! $post_id && $post_type ) {
+  public function get_tags( $post_id = null, $post_type = null ) {
+    if ( ! ( $post_id || $post_type ) ) {
       return;
     }
 
-    if( $post_type !== 'post' ) {
+    if ( $post_type !== 'post' ) {
       return false;
     }
 
-    return wp_get_post_tags( $post_id );
+    return get_the_tags( $post_id );
   }
 
   /**
    * Return post category for specific post/page
    *
-   * @param int $post_id      Page/Post ID.
+   * @param int    $post_id      Page/Post ID.
    * @param string $post_type Type.
    * @return string
    *
    * @since 1.0.0
    */
-  public function get_category( $post_id = null, $post_type = null  ) {
-    if ( ! $post_id && $post_type ) {
+  public function get_category( $post_id = null, $post_type = null ) {
+    if ( ! ( $post_id || $post_type ) ) {
       return;
     }
 
-    if( $post_type !== 'post' ) {
+    if ( $post_type !== 'post' ) {
       return false;
     }
 
-    return wp_get_post_tags( $post_id );
+    return get_the_category( $post_id );
   }
 
   /**
@@ -275,7 +275,7 @@ class Page {
     $image_sizes = get_intermediate_image_sizes();
 
     $featured_image = array();
-    foreach( $image_sizes as $image_size ) {
+    foreach ( $image_sizes as $image_size ) {
       $featured_image[ $image_size ] = get_the_post_thumbnail_url( $post_id, $image_size );
     }
 
@@ -317,14 +317,14 @@ class Page {
   /**
    * Return page template for specific post/page
    *
-   * @param int $post_id      Page/Post ID.
+   * @param int    $post_id      Page/Post ID.
    * @param string $post_type Type.
    * @return string
    *
    * @since 1.0.0
    */
   public function get_page_template( $post_id = null, $post_type = null ) {
-    if ( ! $post_id && $post_type ) {
+    if ( ! ( $post_id || $post_type ) ) {
       return;
     }
 
@@ -333,7 +333,7 @@ class Page {
       $template = get_page_template_slug( $post_id );
 
       // IF template is default or no custom template is available.
-      if( empty( $template ) ) {
+      if ( empty( $template ) ) {
         return 'default';
       }
 
@@ -369,7 +369,20 @@ class Page {
    * @since 1.0.0
    */
   public function get_allowed_post_types() {
-    return apply_filters( 'djc_set_allowed_post_types', $this->set_default_allowed_post_types() );
+
+    $default = $this->default_allowed_post_types();
+
+    // Allow developers to add new items to array.
+    if ( has_filter( 'djc_set_allowed_post_types' ) ) {
+      $filtered = apply_filters( 'djc_set_allowed_post_types', $default );
+
+      // Must be array.
+      if ( is_array( $filtered ) ) {
+        $default = $filtered;
+      }
+    }
+
+    return $default;
   }
 
   /**
@@ -379,7 +392,7 @@ class Page {
    *
    * @since 1.0.0
    */
-  public function set_default_allowed_post_types() {
+  public function default_allowed_post_types() {
     return array( 'post', 'page' );
   }
 
