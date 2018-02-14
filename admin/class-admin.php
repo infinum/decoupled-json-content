@@ -102,10 +102,34 @@ class Admin {
   }
 
   /**
+   * Return html for endpoint link depending on transient state.
+   *
+   * @param int $post_id post_id.
+   * @return html
+   */
+  public function get_enpoint_link( $post_id = null ) {
+    if ( ! $post_id ) {
+      return;
+    }
+
+    $cache_name = $this->page->get_page_cache_name_by_id( $post_id );
+    if ( ! $cache_name ) {
+      return false;
+    }
+
+    $cache = get_transient( $cache_name );
+    if ( $cache === false ) {
+      return '<span class="dashicons dashicons-no"></span>';
+    } else {
+      return '<span class="dashicons dashicons-yes"></span>&nbsp;<a href="' . esc_url( $this->page->get_api_endpoint_link_by_id( $post_id ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'API', 'decoupled_json_content' ) . '</a>';
+    }
+  }
+
+  /**
    * Add Columns Content for Events Type
    *
-   * @param array  $column column.
-   * @param string $post_id post_id.
+   * @param array $column  column.
+   * @param int   $post_id post_id.
    *
    * @since 1.0.0
    */
@@ -113,18 +137,22 @@ class Admin {
 
     switch ( $column ) {
       case 'cached':
-        $cache_name = $this->page->get_page_cache_name_by_id( $post_id );
-        if ( ! $cache_name ) {
-          return false;
-        }
-
-        $cache = get_transient( $cache_name );
-        if ( $cache === false ) {
-          echo '<span class="dashicons dashicons-no"></span>';
-        } else {
-          echo '<span class="dashicons dashicons-yes"></span>&nbsp;<a href="' , esc_url( $this->page->get_api_endpoint_link_by_id( $post_id ) ) , '" target="_blank" rel="noopener noreferrer">' , esc_html__( 'API', 'decoupled_json_content' ) , '</a>';
-        }
+        $this->get_enpoint_link( $post_id );
             break;
     }
   }
+
+  /**
+   * Add endpoint link to the publish meta box
+   *
+   * @since 1.0.0
+   */
+  function add_publish_meta_options() {
+    global $post;
+
+    if ( $this->page->is_post_type_allowed_to_save( $post->post_type ) ) {
+      echo wp_kses_post( '<div class="misc-pub-section">' . $this->get_enpoint_link( $post->ID ) . '</div>' );
+    }
+  }
+
 }

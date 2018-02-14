@@ -130,6 +130,7 @@ class Main {
     $this->loader->add_filter( 'manage_pages_columns', $admin, 'add_admin_columns' );
     $this->loader->add_action( 'manage_posts_custom_column', $admin, 'add_admin_columns_content', 10, 2 );
     $this->loader->add_filter( 'manage_posts_columns', $admin, 'add_admin_columns' );
+    $this->loader->add_filter( 'post_submitbox_misc_actions', $admin, 'add_publish_meta_options' );
 
     // Api settings page.
     $this->loader->add_action( 'admin_menu', $api_settings_page, 'register_settings_page' );
