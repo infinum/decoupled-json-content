@@ -137,7 +137,7 @@ class Admin {
 
     switch ( $column ) {
       case 'cached':
-        $this->get_enpoint_link( $post_id );
+        echo $this->get_enpoint_link( $post_id );
             break;
     }
   }
