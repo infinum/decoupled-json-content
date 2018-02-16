@@ -1,6 +1,6 @@
 <?php
 /**
- * Generate rest doute
+ * Generate rest route
  *
  * Route location: /wp-content/plugins/decoupled-json-content/page/rest-routes/page.php?slug=slug&type=type
  *
@@ -8,15 +8,17 @@
  * @package decoupled_json_content
  */
 
-namespace Decoupled_Json_Content\Page;
+namespace Decoupled_Json_Content\Page\Rest_Routes;
 
 use Decoupled_Json_Content\Helpers as General_Helpers;
+use Decoupled_Json_Content\Page as Page;
+
 
 require_once( '../../wp-config-simple.php' );
 require_once( '../class-page.php' );
 require_once( '../../helpers/class-general-helper.php' );
 
-$page = new Page();
+$page = new Page\Page();
 $general_helper = new General_Helpers\General_Helper();
 
 // Check input and protect it.
@@ -26,7 +28,6 @@ if ( ( isset( $_GET['slug'] ) || ! empty( $_GET['slug'] ) ) && ( isset( $_GET['t
 } else {
   wp_send_json( $general_helper->set_msg_array( 'error', 'Error, page slug or type is missing!' ) );
 }
-
 
 $cache = get_transient( $page->get_page_cache_name_by_slug( $post_slug, $post_type ) );
 

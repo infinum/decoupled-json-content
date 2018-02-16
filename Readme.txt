@@ -53,6 +53,7 @@ We included several hooks that you can use to extend the functionality of the pl
 * `djc_set_post_append` - append new data to json. The return value has to be array with key and value.
 * `djc_set_allowed_post_types` - set post types you want to use. Default is 'post', 'page'. The return value has to be array.
 * `djc_append_endpoints_list` - append data to default endpoints list to show on API's List setting page. The return value has to be multidimensional array with title and url key.
+* `djc_set_data_list_args` - set Wp_Query arguments you want to use. The return value has to be array.
 
 == Changelog ==
 

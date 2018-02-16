@@ -161,6 +161,7 @@ class Main {
    */
   private function define_page_hooks() {
     $page = new Page\Page( $this->get_plugin_info() );
+    $data_list = new Page\Data_List( $this->get_plugin_info() );
 
     // Page.
     $this->loader->add_action( 'save_post', $page, 'update_page_transient' );
