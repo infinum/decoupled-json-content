@@ -41,7 +41,6 @@ If you had content when installing this plugin you won't have any JSON for this 
 
 We included several hooks that you can use to extend the functionality of the plugin:
 
-* `djc_set_menu_positions` - set all of the available menu positions on you page, and set the appropriate endpoint. The return value has to be array.
 * `djc_remove_menu_prefix_slash` - remove prefix slash in menu items, accepts boolean. Default is true.
 * `djc_set_posts_slug` - change the page slug for your blog posts. Default is 'blog'
 * `djc_set_featured_image` - override the post featured image for post json
