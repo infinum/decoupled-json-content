@@ -137,6 +137,9 @@ class Main {
     $this->loader->add_action( 'wp_ajax_nopriv_djc_rebuild_all_transients_ajax', $api_settings_page, 'djc_rebuild_all_transients_ajax' );
     $this->loader->add_action( 'wp_ajax_djc_rebuild_all_transients_ajax', $api_settings_page, 'djc_rebuild_all_transients_ajax' );
 
+    $this->loader->add_action( 'wp_ajax_nopriv_djc_rebuild_data_list_transients_ajax', $api_settings_page, 'djc_rebuild_data_list_transients_ajax' );
+    $this->loader->add_action( 'wp_ajax_djc_rebuild_data_list_transients_ajax', $api_settings_page, 'djc_rebuild_data_list_transients_ajax' );
+
   }
 
   /**
