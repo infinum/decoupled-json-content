@@ -177,6 +177,9 @@ class Main {
   private function define_data_list_hooks() {
     $data_list = new Data_List\Data_List( $this->get_plugin_info() );
 
+    // Data List
+    $this->loader->add_action( 'save_post', $data_list, 'update_page_transient' );
+
     // Ajax callbacks.
     $this->loader->add_action( 'wp_ajax_nopriv_djc_rebuild_lists_transients_ajax', $data_list, 'djc_rebuild_lists_transients_ajax' );
     $this->loader->add_action( 'wp_ajax_djc_rebuild_lists_transients_ajax', $data_list, 'djc_rebuild_lists_transients_ajax' );

@@ -32,7 +32,8 @@ $(function() {
     const confirmAction = confirm(djcLocalization.confirmRebuildAction); // eslint-disable-line no-alert
     if (confirmAction) {
       const actionFilter = $(event.target).attr('data-action-filter');
-      regenerateDataListTransients.rebuild(actionFilter);
+      const postType = $(event.target).attr('data-post-type');
+      regenerateDataListTransients.rebuild(actionFilter, postType);
     }
   });
   

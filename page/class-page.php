@@ -422,6 +422,16 @@ class Page {
    * @since 1.0.0
    */
   public function update_page_transient( $post_id ) {
+
+    // Remove updating on save.
+    if ( has_filter( 'djc_remove_items_updating' ) ) {
+      $remove_updating = apply_filters( 'djc_remove_items_updating', '' );
+
+      if ( $remove_updating === true ) {
+        return false;
+      }
+    }
+
     $post_status = get_post_status( $post_id );
 
     $post = $this->get_page_details_by_id( $post_id );
@@ -555,7 +565,7 @@ class Page {
 
     switch ( $column ) {
       case 'cached':
-        echo esc_url( $this->get_enpoint_link( $post_id ) );
+        echo wp_kses_post( $this->get_enpoint_link( $post_id ) );
             break;
     }
   }

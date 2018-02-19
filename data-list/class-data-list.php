@@ -59,15 +59,19 @@ class Data_List {
   /**
    * Build final json by getting the order from transient build by button in list settings page.
    *
-   * @param string $transient_name Transient name provided by filter paremetar in url.
+   * @param string $filter Transient name provided by filter paremetar in url.
    * @return array
    *
    * @since  1.0.0
    */
-  public function get_data_list( $transient_name = null ) {
+  public function get_data_list( $post_type = null, $filter = null ) {
+    if ( ! ( $post_type || $filter ) ) {
+      return false;
+    }
+
     $page = new Page\Page();
 
-    $cache_name = $this->get_cache_name( $transient_name );
+    $cache_name = $this->get_cache_name( $post_type, $filter );
     if ( ! $cache_name ) {
       return false;
     }
@@ -100,12 +104,12 @@ class Data_List {
    *
    * @since  1.0.0
    */
-  public function get_cache_name( $action_filter = null ) {
-    if( ! empty( $action_filter ) ) {
-      $action_filter = '_' . $action_filter;
+  public function get_cache_name( $post_type = null, $action_filter = null ) {
+    if ( ! ( $post_type || $action_filter ) ) {
+      return false;
     }
 
-    return $this->list_cache_name . $action_filter;
+    return $this->list_cache_name . '_' . $post_type . '_' . $action_filter;
   }
 
   /**
@@ -119,6 +123,7 @@ class Data_List {
     return array(
       'post_type'      => 'post',
       'posts_per_page' => 10000,
+      'post_status'    => 'publish'
     );
   }
 
@@ -159,8 +164,11 @@ class Data_List {
    *
    * @since  1.0.0
    */
-  public function set_transient( $action_filter = null ) {
+  public function set_transient( $postType = null, $action_filter = null ) {
     if ( current_user_can( 'edit_users' ) ) {
+      if ( ! ( $post_type || $action_filter ) ) {
+        return false;
+      }
 
       if( ! empty( $action_filter ) ) {
         $action_filter = str_replace(' ', '_', $action_filter);
@@ -190,7 +198,7 @@ class Data_List {
         wp_reset_postdata();
       }
 
-      $cache_name = $this->get_cache_name( $action_filter );
+      $cache_name = $this->get_cache_name( $postType, $action_filter );
       if ( ! $cache_name ) {
         return false;
       }
@@ -198,6 +206,49 @@ class Data_List {
       set_transient( $cache_name, $output_array, 0 );
     }
   }
+
+  /**
+   * Update list to transient for caching on action hooks save_post.
+   *
+   * @param int $post_id Saved Post ID provided by action hook.
+   *
+   * @since 1.0.0
+   */
+  public function update_page_transient( $post_id ) {
+
+    // Remove updating on save.
+    if ( has_filter( 'djc_remove_lists_updating' ) ) {
+      $remove_updating = apply_filters( 'djc_remove_lists_updating', '' );
+
+      if( $remove_updating === true ) {
+        return false;
+      }
+    }
+
+    $post_status = get_post_status( $post_id );
+    $post_type = get_post_type( $post_id );
+    $transient_name = '_transient_' . $this->list_cache_name . '_' . $post_type . '_';
+
+    if ( $post_status === 'auto-draft' || $post_status === 'inherit' ) {
+      return false;
+    } else {
+
+      // Loop all options to find transient items.
+      foreach( wp_load_alloptions() as $key => $value ) {
+
+        // Regex to find transient matching post type.
+        if( preg_match( '/^' . $transient_name  . '/', $key ) ) {
+          
+          // Strip string to get action filter name.
+          $action_filter = str_replace( $transient_name, '', $key );
+
+          // Update transient.
+          $this->set_transient( $post_type, $action_filter );
+        }
+      }
+    }
+  }
+
 
   /**
    * Ajax function to rebuild all data list transients.
@@ -216,7 +267,11 @@ class Data_List {
       $action_filter = sanitize_text_field( wp_unslash( $_REQUEST['actionFilter'] ) ); // WPCS: input var ok; CSRF ok.
     }
 
-    $this->set_transient( $action_filter );
+    if ( isset( $_REQUEST['postType'] ) ) { // WPCS: input var ok; CSRF ok.
+      $postType = sanitize_text_field( wp_unslash( $_REQUEST['postType'] ) ); // WPCS: input var ok; CSRF ok.
+    }
+
+    $this->set_transient( $postType, $action_filter );
 
     wp_send_json( $general_helper->set_msg_array( 'success', 'Success in rebuilding transients for cache!' ) );
   }

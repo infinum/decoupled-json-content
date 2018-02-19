@@ -17,14 +17,19 @@
   <?php if ( ! empty( $list ) ) { ?>
     <ul>
       <?php foreach ( $list as $list_item ) { ?>
-        <?php if ( ! empty( $list_item['url'] && $list_item['title'] ) ) { ?>
+        <?php
+          $url = $general_helper->get_array_value( 'url', $list_item );
+          $title = $general_helper->get_array_value( 'title', $list_item );
+          $note = $general_helper->get_array_value( 'note', $list_item );
+        ?>
+        <?php if ( ! empty( $url && $title ) ) { ?>
           <li>
-            <a href="<?php echo esc_url( $list_item['url'] ); ?>" target="_blank" rel="noopener noreferrer"> 
-              <?php echo wp_kses_post( $list_item['title'] ); ?>
+            <a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer"> 
+              <?php echo wp_kses_post( $title ); ?>
             </a>
-            <?php if ( ! empty( $list_item['note'] ) ) { ?>
+            <?php if ( ! empty( $note ) ) { ?>
               <br/>
-              <small><?php echo wp_kses_post( $list_item['note'] ); ?></small>
+              <small><?php echo wp_kses_post( $note ); ?></small>
             <?php } ?>
           </li>
         <?php } ?>
