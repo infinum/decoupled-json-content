@@ -183,10 +183,10 @@ class Api_Settings_Page {
    */
   public function get_settings_page_data_list() {
     $default_endpoints = array(
-      array(
-        'title' => 'Rebuild Default Posts List',
-        'action-filter' => 'default',
-      )
+        array(
+            'title' => 'Rebuild Default Posts List',
+            'action-filter' => 'default',
+        ),
     );
 
     // Allow developers to add new items to list.

@@ -8,7 +8,6 @@
 
 namespace Decoupled_Json_Content\Page;
 
-// use Decoupled_Json_Content\Admin as Admin;
 use Decoupled_Json_Content\Helpers as General_Helpers;
 
 /**
@@ -508,13 +507,13 @@ class Page {
   }
 
     /**
-   * Add Columns for Post/Page/Custom post type
-   *
-   * @param array $columns columns.
-   * @return array
-   *
-   * @since 1.0.0
-   */
+     * Add Columns for Post/Page/Custom post type
+     *
+     * @param array $columns columns.
+     * @return array
+     *
+     * @since 1.0.0
+     */
   public function add_admin_columns( $columns ) {
     $columns['cached'] = esc_html__( 'Cached', 'decoupled_json_content' );
     return $columns;
@@ -556,7 +555,7 @@ class Page {
 
     switch ( $column ) {
       case 'cached':
-        echo $this->get_enpoint_link( $post_id );
+        echo esc_url( $this->get_enpoint_link( $post_id ) );
             break;
     }
   }

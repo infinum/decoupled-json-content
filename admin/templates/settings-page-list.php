@@ -25,7 +25,7 @@
             </a>
             &nbsp;
             <button class="js-djc-rebuild-data-list button-primary" data-action-filter="<?php echo esc_html( $list_item['action-filter'] ); ?>">
-              <?php esc_html_e( $list_item['title'] ); ?>
+              <?php echo esc_html( $list_item['title'] ); ?>
             </button>
           </li>
         <?php } ?>
