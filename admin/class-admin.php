@@ -9,7 +9,6 @@
 namespace Decoupled_Json_Content\Admin;
 
 use Decoupled_Json_Content\Helpers as General_Helpers;
-use Decoupled_Json_Content\Page as Page;
 
 /**
  * Class Admin
@@ -44,15 +43,6 @@ class Admin {
   public $general_helper;
 
   /**
-   * Page class
-   *
-   * @var object Page
-   *
-   * @since 1.0.0
-   */
-  public $page;
-
-  /**
    * Initialize class
    *
    * @param array $plugin_info Load global theme info.
@@ -64,7 +54,6 @@ class Admin {
     $this->plugin_version = $plugin_info['plugin_version'];
 
     $this->general_helper = new General_Helpers\General_Helper();
-    $this->page = new Page\Page( $plugin_info );
   }
 
   /**

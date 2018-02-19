@@ -117,7 +117,7 @@ class Api_Settings_Page {
   }
 
   /**
-   * Return array of all avaiable endpoints
+   * Return array of all avaiable endpoints for General List
    *
    * @return array
    *
@@ -146,7 +146,7 @@ class Api_Settings_Page {
   }
 
   /**
-   * Return array of all avaiable endpoints
+   * Return array of all avaiable endpoints for Items list.
    *
    * @return array
    *
@@ -175,7 +175,7 @@ class Api_Settings_Page {
   }
 
   /**
-   * Return array of all avaiable endpoints for data list
+   * Return array of all avaiable endpoints for data list.
    *
    * @return array
    *
@@ -204,7 +204,7 @@ class Api_Settings_Page {
 
 
   /**
-   * Get template view from partial file for list page.
+   * Get template view from partial file for general page.
    *
    * @since 1.0.0
    */
@@ -215,7 +215,7 @@ class Api_Settings_Page {
   }
 
   /**
-   * Get template view from partial file for cache rebuild page.
+   * Get template view from partial file for items page.
    *
    * @since 1.0.0
    */
@@ -226,7 +226,7 @@ class Api_Settings_Page {
   }
 
   /**
-   * Get template view from partial file for data list cache rebuild page.
+   * Get template view from partial file for list page.
    *
    * @since 1.0.0
    */

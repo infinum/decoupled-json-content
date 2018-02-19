@@ -157,9 +157,11 @@ class Main {
     // Page.
     $this->loader->add_action( 'save_post', $page, 'update_page_transient' );
 
+    // Ajax callbacks.
     $this->loader->add_action( 'wp_ajax_nopriv_djc_rebuild_items_transients_ajax', $page, 'djc_rebuild_items_transients_ajax' );
     $this->loader->add_action( 'wp_ajax_djc_rebuild_items_transients_ajax', $page, 'djc_rebuild_items_transients_ajax' );
 
+    // Listing and single items.
     $this->loader->add_action( 'manage_pages_custom_column', $page, 'add_admin_columns_content', 10, 2 );
     $this->loader->add_filter( 'manage_pages_columns', $page, 'add_admin_columns' );
     $this->loader->add_action( 'manage_posts_custom_column', $page, 'add_admin_columns_content', 10, 2 );
@@ -175,7 +177,7 @@ class Main {
   private function define_data_list_hooks() {
     $data_list = new Data_List\Data_List( $this->get_plugin_info() );
 
-    // Data List.
+    // Ajax callbacks.
     $this->loader->add_action( 'wp_ajax_nopriv_djc_rebuild_lists_transients_ajax', $data_list, 'djc_rebuild_lists_transients_ajax' );
     $this->loader->add_action( 'wp_ajax_djc_rebuild_lists_transients_ajax', $data_list, 'djc_rebuild_lists_transients_ajax' );
 

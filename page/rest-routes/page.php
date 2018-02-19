@@ -21,18 +21,24 @@ require_once( '../../helpers/class-general-helper.php' );
 $page = new Page\Page();
 $general_helper = new General_Helpers\General_Helper();
 
-// Check input and protect it.
-if ( ( isset( $_GET['slug'] ) || ! empty( $_GET['slug'] ) ) && ( isset( $_GET['type'] ) || ! empty( $_GET['type'] ) ) ) { // WPCS: XSS ok, sanitization ok, CSRF ok.
-  $post_slug = htmlentities( trim( $_GET['slug'] ), ENT_QUOTES ); // WPCS: XSS ok, sanitization ok, CSRF ok.
-  $post_type = htmlentities( trim( $_GET['type'] ), ENT_QUOTES ); // WPCS: XSS ok, sanitization ok, CSRF ok.
+// Check slug.
+if ( isset( $_GET['slug'] ) && ! empty( $_GET['slug'] ) ) { // WPCS: input var ok; CSRF ok.
+  $post_slug = sanitize_text_field( wp_unslash( $_GET['slug'] ) ); // WPCS: input var ok; CSRF ok.
 } else {
-  wp_send_json( $general_helper->set_msg_array( 'error', 'Error, page slug or type is missing!' ) );
+  wp_send_json( $general_helper->set_msg_array( 'error', 'Error, slug is missing!' ) );
+}
+
+// Check post type.
+if ( isset( $_GET['type'] ) && ! empty( $_GET['type'] ) ) { // WPCS: input var ok; CSRF ok.
+  $post_type = sanitize_text_field( wp_unslash( $_GET['type'] ) ); // WPCS: input var ok; CSRF ok.
+} else {
+  wp_send_json( $general_helper->set_msg_array( 'error', 'Error, type is missing!' ) );
 }
 
 $cache = get_transient( $page->get_page_cache_name_by_slug( $post_slug, $post_type ) );
 
 if ( $cache === false ) {
-  wp_send_json( $general_helper->set_msg_array( 'error', 'Error, the page does not exist or it is not cached correctly. Please try rebuilding cache and try again!' ) );
+  wp_send_json( $general_helper->set_msg_array( 'error', 'Error, there is a problem with your configuration or pages/posts are it is not cached correctly. Please check your configuration, rebuilding cache and try again!' ) );
 }
 
 wp_send_json( json_decode( $cache ) );

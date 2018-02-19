@@ -29,7 +29,7 @@ if ( isset( $_GET['filter'] ) ) { // WPCS: input var ok; CSRF ok.
 $cache = $data_list->get_data_list( $filter );
 
 if ( $cache === false ) {
-  wp_send_json( $general_helper->set_msg_array( 'error', 'Error, there is a problem with your configuration or pages/posts are it is not cached correctly. Please try rebuilding cache and try again!' ) );
+  wp_send_json( $general_helper->set_msg_array( 'error', 'Error, there is a problem with your configuration or pages/posts are it is not cached correctly. Please check your configuration, rebuilding cache and try again!' ) );
 }
 
 wp_send_json( $cache );

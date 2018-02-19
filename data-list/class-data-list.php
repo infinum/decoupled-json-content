@@ -36,6 +36,15 @@ class Data_List {
   protected $plugin_version;
 
   /**
+   * List name used for caching in transient prepended with filter name.
+   *
+   * @var string
+   *
+   * @since 1.0.0
+   */
+  public $list_cache_name = 'djs_data_list';
+
+  /**
    * Initialize class
    *
    * @param array $plugin_info Load global theme info.
@@ -48,9 +57,9 @@ class Data_List {
   }
 
   /**
-   * Build json buy getting the order from transient build by button.
+   * Build final json by getting the order from transient build by button in list settings page.
    *
-   * @param string $transient_name Transient name provide from url.
+   * @param string $transient_name Transient name provided by filter paremetar in url.
    * @return array
    *
    * @since  1.0.0
@@ -64,7 +73,6 @@ class Data_List {
     }
 
     $posts = get_transient( $cache_name );
-
     if ( ! $posts ) {
       return false;
     }
@@ -87,7 +95,7 @@ class Data_List {
   /**
    * Get cache name.
    *
-   * @param string $action_filter Action filter name provided by filter.
+   * @param string $action_filter Action filter name provided by filter paremetar in url.
    * @return string
    *
    * @since  1.0.0
@@ -97,11 +105,11 @@ class Data_List {
       $action_filter = '_' . $action_filter;
     }
 
-    return 'djs_data_list' . $action_filter;
+    return $this->list_cache_name . $action_filter;
   }
 
   /**
-   * Get default posts list.
+   * Get default posts list arguments.
    *
    * @return array
    *
@@ -117,7 +125,7 @@ class Data_List {
   /**
    * Get arguments list for query.
    *
-   * @param string $filter Add custom filter to override the default.
+   * @param string $filter Add custom filter to override the default. Filter hook is created by default name and prefixed filter provider as arg.
    * @return array
    *
    * @since  1.0.0
@@ -145,10 +153,9 @@ class Data_List {
   }
 
   /**
-   * Set transient data for order list.
+   * Set transient data to be later use for sort ordering.
    *
-   * @param [type] $action_filter Filter name.
-   * @param [type] $transient_name Treansient name.
+   * @param string $action_filter Action filter name provided by filter paremetar in url.
    *
    * @since  1.0.0
    */
@@ -192,8 +199,8 @@ class Data_List {
     }
   }
 
-    /**
-   * Ajax function to rebuild all data list transients
+  /**
+   * Ajax function to rebuild all data list transients.
    *
    * @since 1.0.0
    */
