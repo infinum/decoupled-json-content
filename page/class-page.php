@@ -8,7 +8,8 @@
 
 namespace Decoupled_Json_Content\Page;
 
-use Decoupled_Json_Content\Admin as Admin;
+// use Decoupled_Json_Content\Admin as Admin;
+use Decoupled_Json_Content\Helpers as General_Helpers;
 
 /**
  * Class Page
@@ -170,39 +171,39 @@ class Page {
         $post_type = $the_query->post->post_type;
         $page_output = (array) $the_query->post;
 
-        $featured_image = apply_filters( 'djc_set_featured_image', $this->get_featured_image( $post_id ) );
+        $featured_image = apply_filters( 'djc_set_items_featured_image', $this->get_featured_image( $post_id ) );
         if ( $featured_image !== false ) {
           $page_output['featured_image'] = $featured_image;
         }
 
-        $tags = apply_filters( 'djc_set_tags', $this->get_tags( $post_id, $post_type ) );
+        $tags = apply_filters( 'djc_set_items_tags', $this->get_tags( $post_id, $post_type ) );
         if ( $tags !== false ) {
           $page_output['tags'] = $tags;
         }
 
-        $category = apply_filters( 'djc_set_category', $this->get_category( $post_id, $post_type ) );
+        $category = apply_filters( 'djc_set_items_category', $this->get_category( $post_id, $post_type ) );
         if ( $category !== false ) {
           $page_output['category'] = $category;
         }
 
-        $custom_fields = apply_filters( 'djc_set_custom_fields', $this->get_custom_fields( $post_id ) );
+        $custom_fields = apply_filters( 'djc_set_items_custom_fields', $this->get_custom_fields( $post_id ) );
         if ( $custom_fields !== false ) {
           $page_output['custom_fields'] = $custom_fields;
         }
 
-        $template = apply_filters( 'djc_set_page_template', $this->get_page_template( $post_id, $post_type ) );
+        $template = apply_filters( 'djc_set_items_page_template', $this->get_page_template( $post_id, $post_type ) );
         if ( $template !== false ) {
           $page_output['template'] = $template;
         }
 
-        $format = apply_filters( 'djc_set_post_format', $this->get_post_format( $post_id ) );
+        $format = apply_filters( 'djc_set_items_post_format', $this->get_post_format( $post_id ) );
         if ( $format !== false ) {
           $page_output['format'] = $format;
         }
 
         // Allow developers to add new items to list.
-        if ( has_filter( 'djc_set_post_append' ) ) {
-          $appended_key = apply_filters( 'djc_set_post_append', $page_output );
+        if ( has_filter( 'djc_set_items_append' ) ) {
+          $appended_key = apply_filters( 'djc_set_items_append', $page_output );
 
           // Must be array.
           if ( is_array( $appended_key ) ) {
@@ -373,8 +374,8 @@ class Page {
     $default = $this->default_allowed_post_types();
 
     // Allow developers to add new items to array.
-    if ( has_filter( 'djc_set_allowed_post_types' ) ) {
-      $filtered = apply_filters( 'djc_set_allowed_post_types', $default );
+    if ( has_filter( 'djc_set_items_allowed_post_types' ) ) {
+      $filtered = apply_filters( 'djc_set_items_allowed_post_types', $default );
 
       // Must be array.
       if ( is_array( $filtered ) ) {
@@ -486,6 +487,90 @@ class Page {
         }
         wp_reset_postdata();
       }
+    }
+  }
+
+  /**
+   * Ajax function to rebuild all data transients
+   *
+   * @since 1.0.0
+   */
+  public function djc_rebuild_items_transients_ajax() {
+    $general_helper = new General_Helpers\General_Helper();
+
+    if ( ! isset( $_POST['djcRebuildNonce'] ) && ! wp_verify_nonce( sanitize_key( $_POST['djcRebuildNonce'] ), 'djc_rebuild_nonce_action' ) ) {
+      wp_send_json( $general_helper->set_msg_array( 'error', 'Check your nonce!' ) );
+    }
+
+    $this->set_all_pages_transient();
+
+    wp_send_json( $general_helper->set_msg_array( 'success', 'Success in rebuilding transients for cache!' ) );
+  }
+
+    /**
+   * Add Columns for Post/Page/Custom post type
+   *
+   * @param array $columns columns.
+   * @return array
+   *
+   * @since 1.0.0
+   */
+  public function add_admin_columns( $columns ) {
+    $columns['cached'] = esc_html__( 'Cached', 'decoupled_json_content' );
+    return $columns;
+  }
+
+  /**
+   * Return html for endpoint link depending on transient state.
+   *
+   * @param int $post_id post_id.
+   * @return html
+   */
+  public function get_enpoint_link( $post_id = null ) {
+    if ( ! $post_id ) {
+      return;
+    }
+
+    $cache_name = $this->get_page_cache_name_by_id( $post_id );
+    if ( ! $cache_name ) {
+      return false;
+    }
+
+    $cache = get_transient( $cache_name );
+    if ( $cache === false ) {
+      return '<span class="dashicons dashicons-no"></span>';
+    } else {
+      return '<span class="dashicons dashicons-yes"></span>&nbsp;<a href="' . esc_url( $this->get_api_endpoint_link_by_id( $post_id ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'API', 'decoupled_json_content' ) . '</a>';
+    }
+  }
+
+  /**
+   * Add Columns Content for Events Type
+   *
+   * @param array $column  column.
+   * @param int   $post_id post_id.
+   *
+   * @since 1.0.0
+   */
+  public function add_admin_columns_content( $column, $post_id ) {
+
+    switch ( $column ) {
+      case 'cached':
+        echo $this->get_enpoint_link( $post_id );
+            break;
+    }
+  }
+
+  /**
+   * Add endpoint link to the publish meta box
+   *
+   * @since 1.0.0
+   */
+  function add_publish_meta_options() {
+    global $post;
+
+    if ( $this->is_post_type_allowed_to_save( $post->post_type ) ) {
+      echo wp_kses_post( '<div class="misc-pub-section">' . $this->get_enpoint_link( $post->ID ) . '</div>' );
     }
   }
 }

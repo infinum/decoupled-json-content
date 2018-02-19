@@ -5,8 +5,8 @@ $(function() {
 
   // Rebuild thumbnail ajax action
   const regenerateDataTransients = new RegenerateDataTransients({
-    ajaxAction: 'djc_rebuild_all_transients_ajax',
-    nonceField: '#djc_rebuild_nonce',
+    ajaxAction: 'djc_rebuild_items_transients_ajax',
+    nonceField: '#djc_rebuild_items_nonce',
     msgSelector: '.js-djc-msg',
   });
 
@@ -21,8 +21,8 @@ $(function() {
 
   // Rebuild thumbnail ajax action
   const regenerateDataListTransients = new RegenerateDataTransients({
-    ajaxAction: 'djc_rebuild_data_list_transients_ajax',
-    nonceField: '#djc_rebuild_nonce',
+    ajaxAction: 'djc_rebuild_lists_transients_ajax',
+    nonceField: '#djc_rebuild_lists_nonce',
     msgSelector: '.js-djc-msg',
   });
 
@@ -32,8 +32,7 @@ $(function() {
     const confirmAction = confirm(djcLocalization.confirmRebuildAction); // eslint-disable-line no-alert
     if (confirmAction) {
       const actionFilter = $(event.target).attr('data-action-filter');
-      const transientName = $(event.target).attr('data-transient-name');
-      regenerateDataListTransients.rebuild(actionFilter, transientName);
+      regenerateDataListTransients.rebuild(actionFilter);
     }
   });
   

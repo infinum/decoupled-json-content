@@ -6,9 +6,11 @@
  * @package decoupled_json_content
  */
 
-namespace Decoupled_Json_Content\Page;
+namespace Decoupled_Json_Content\Data_List;
 
-use Decoupled_Json_Content\Admin as Admin;
+// use Decoupled_Json_Content\Admin as Admin;
+use Decoupled_Json_Content\Page as Page;
+use Decoupled_Json_Content\Helpers as General_Helpers;
 
 /**
  * Class List
@@ -54,7 +56,7 @@ class Data_List {
    * @since  1.0.0
    */
   public function get_data_list( $transient_name = null ) {
-    $page = new Page();
+    $page = new Page\Page();
 
     $cache_name = $this->get_cache_name( $transient_name );
     if ( ! $cache_name ) {
@@ -85,17 +87,17 @@ class Data_List {
   /**
    * Get cache name.
    *
-   * @param string $transient_name Treansient name provided by filter.
+   * @param string $action_filter Action filter name provided by filter.
    * @return string
    *
    * @since  1.0.0
    */
-  public function get_cache_name( $transient_name = null ) {
-    if( ! empty( $transient_name ) ) {
-      $transient_name = '_' . $transient_name;
+  public function get_cache_name( $action_filter = null ) {
+    if( ! empty( $action_filter ) ) {
+      $action_filter = '_' . $action_filter;
     }
 
-    return 'djs_data_list' . $transient_name;
+    return 'djs_data_list' . $action_filter;
   }
 
   /**
@@ -130,8 +132,8 @@ class Data_List {
     }
 
     // Allow developers to add new items to array.
-    if ( has_filter( 'djs_set_data_list' . $action_filter ) ) {
-      $filtered = apply_filters( 'djs_set_data_list' . $action_filter, $default );
+    if ( has_filter( 'djs_set_lists_endpoint_query' . $action_filter ) ) {
+      $filtered = apply_filters( 'djs_set_lists_endpoint_query' . $action_filter, $default );
 
       // Must be array.
       if ( is_array( $filtered ) ) {
@@ -150,9 +152,13 @@ class Data_List {
    *
    * @since  1.0.0
    */
-  public function set_transient( $action_filter = null, $transient_name = null ) {
+  public function set_transient( $action_filter = null ) {
     if ( current_user_can( 'edit_users' ) ) {
 
+      if( ! empty( $action_filter ) ) {
+        $action_filter = str_replace(' ', '_', $action_filter);
+        $action_filter = str_replace('-', '_', $action_filter);
+      }
 
       $output_array = array();
       $args = $this->get_args( $action_filter );
@@ -177,12 +183,34 @@ class Data_List {
         wp_reset_postdata();
       }
 
-      $cache_name = $this->get_cache_name( $transient_name );
+      $cache_name = $this->get_cache_name( $action_filter );
       if ( ! $cache_name ) {
         return false;
       }
 
       set_transient( $cache_name, $output_array, 0 );
     }
+  }
+
+    /**
+   * Ajax function to rebuild all data list transients
+   *
+   * @since 1.0.0
+   */
+  public function djc_rebuild_lists_transients_ajax() {
+    $general_helper = new General_Helpers\General_Helper();
+    $action_filter = '';
+
+    if ( ! isset( $_POST['djcRebuildNonce'] ) && ! wp_verify_nonce( sanitize_key( $_POST['djcRebuildNonce'] ), 'djc_rebuild_nonce_action' ) ) {
+      wp_send_json( $general_helper->set_msg_array( 'error', 'Check your nonce!' ) );
+    }
+
+    if ( isset( $_REQUEST['actionFilter'] ) ) { // WPCS: input var ok; CSRF ok.
+      $action_filter = sanitize_text_field( wp_unslash( $_REQUEST['actionFilter'] ) ); // WPCS: input var ok; CSRF ok.
+    }
+
+    $this->set_transient( $action_filter );
+
+    wp_send_json( $general_helper->set_msg_array( 'success', 'Success in rebuilding transients for cache!' ) );
   }
 }

@@ -8,7 +8,6 @@
 
 namespace Decoupled_Json_Content\Admin;
 
-use Decoupled_Json_Content\Page as Page;
 use Decoupled_Json_Content\Helpers as General_Helpers;
 
 /**
@@ -46,13 +45,13 @@ class Api_Settings_Page {
   protected $settings_page_main_slug = 'api-settings';
 
   /**
-   * Settings page rebuild page slug
+   * Settings page items slug
    *
    * @var string
    *
    * @since 1.0.0
    */
-  protected $settings_page_rebuild_slug = 'api-settings-rebuild';
+  protected $settings_page_items_slug = 'api-settings-items';
 
   /**
    * Settings page rebuild page slug
@@ -61,7 +60,7 @@ class Api_Settings_Page {
    *
    * @since 1.0.0
    */
-  protected $settings_page_rebuild_data_list_slug = 'api-settings-rebuild-data-list';
+  protected $settings_page_list_slug = 'api-settings-list';
 
   /**
    * Initialize class
@@ -91,29 +90,29 @@ class Api_Settings_Page {
 
     add_submenu_page(
       $this->settings_page_main_slug,
-      esc_html__( 'APIs List', 'decoupled_json_content' ),
-      esc_html__( 'APIs List', 'decoupled_json_content' ),
+      esc_html__( 'General', 'decoupled_json_content' ),
+      esc_html__( 'General', 'decoupled_json_content' ),
       'manage_options',
       $this->settings_page_main_slug,
+      array( $this, 'get_settings_page_general' )
+    );
+
+    add_submenu_page(
+      $this->settings_page_main_slug,
+      esc_html__( 'Items', 'decoupled_json_content' ),
+      esc_html__( 'Items', 'decoupled_json_content' ),
+      'manage_options',
+      $this->settings_page_items_slug,
+      array( $this, 'get_settings_page_items' )
+    );
+
+    add_submenu_page(
+      $this->settings_page_main_slug,
+      esc_html__( 'List', 'decoupled_json_content' ),
+      esc_html__( 'List', 'decoupled_json_content' ),
+      'manage_options',
+      $this->settings_page_list_slug,
       array( $this, 'get_settings_page_list' )
-    );
-
-    add_submenu_page(
-      $this->settings_page_main_slug,
-      esc_html__( 'Rebuild Cache', 'decoupled_json_content' ),
-      esc_html__( 'Rebuild Cache', 'decoupled_json_content' ),
-      'manage_options',
-      $this->settings_page_rebuild_slug,
-      array( $this, 'get_settings_page_rebuild' )
-    );
-
-    add_submenu_page(
-      $this->settings_page_main_slug,
-      esc_html__( 'Rebuild Data List Cache', 'decoupled_json_content' ),
-      esc_html__( 'Rebuild Data List Cache', 'decoupled_json_content' ),
-      'manage_options',
-      $this->settings_page_rebuild_data_list_slug,
-      array( $this, 'get_settings_page_data_list' )
     );
   }
 
@@ -124,13 +123,8 @@ class Api_Settings_Page {
    *
    * @since 1.0.0
    */
-  public function get_api_endpoints_list() {
+  public function get_settings_page_data_general() {
     $default_endpoints = array(
-        array(
-            'title' => 'Page per slug',
-            'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/page/rest-routes/page.php?slug=&type=',
-            'note' => wp_kses_post( 'Transient data is set on post/page/custom_post_type save. <br/>Cache updated on post/page/custom_post_type save or on rebuild button on this <a href="' . get_home_url() . '/wp-admin/admin.php?page=' . $this->settings_page_rebuild_slug . '">link.</a>', 'decoupled_json_content' ),
-        ),
         array(
             'title' => 'Menus',
             'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/menu/rest-routes/menu.php',
@@ -139,12 +133,41 @@ class Api_Settings_Page {
     );
 
     // Allow developers to add new items to list.
-    if ( has_filter( 'djc_append_endpoints_list' ) ) {
-      $appended_endpoints = apply_filters( 'djc_append_endpoints_list', $default_endpoints );
+    if ( has_filter( 'djc_set_general_endpoint' ) ) {
+      $appended_endpoints = apply_filters( 'djc_set_general_endpoint', $default_endpoints );
 
       // Appended Items must be multidimensional array.
       if ( is_array( $appended_endpoints ) ) {
-        $default_endpoints = array_merge( $default_endpoints, $appended_endpoints );
+        $default_endpoints = $appended_endpoints;
+      }
+    }
+
+    return $default_endpoints;
+  }
+
+  /**
+   * Return array of all avaiable endpoints
+   *
+   * @return array
+   *
+   * @since 1.0.0
+   */
+  public function get_settings_page_data_items() {
+    $default_endpoints = array(
+        array(
+            'title' => 'Individual Item',
+            'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/page/rest-routes/page.php?slug=&type=',
+            'note' => wp_kses_post( 'Transient data is set on post/page/custom_post_type save. <br/>Cache updated on post/page/custom_post_type save or on rebuild button on this <a href="' . get_home_url() . '/wp-admin/admin.php?page=' . $this->settings_page_items_slug . '">link.</a>.', 'decoupled_json_content' ),
+        ),
+    );
+
+    // Allow developers to add new items to list.
+    if ( has_filter( 'djc_set_items_endpoint' ) ) {
+      $appended_endpoints = apply_filters( 'djc_set_items_endpoint', $default_endpoints );
+
+      // Appended Items must be multidimensional array.
+      if ( is_array( $appended_endpoints ) ) {
+        $default_endpoints = $appended_endpoints;
       }
     }
 
@@ -158,18 +181,17 @@ class Api_Settings_Page {
    *
    * @since 1.0.0
    */
-  public function get_api_endpoints_data_list() {
+  public function get_settings_page_data_list() {
     $default_endpoints = array(
       array(
-        'title' => 'Rebuild Posts Default',
-        'action-filter' => false,
-        'transient-name' => false
+        'title' => 'Rebuild Default Posts List',
+        'action-filter' => 'default',
       )
     );
 
     // Allow developers to add new items to list.
-    if ( has_filter( 'djs_add_data_list_rebuild_btn' ) ) {
-      $appended_endpoints = apply_filters( 'djs_add_data_list_rebuild_btn', $default_endpoints );
+    if ( has_filter( 'djs_set_lists_endpoint' ) ) {
+      $appended_endpoints = apply_filters( 'djs_set_lists_endpoint', $default_endpoints );
 
       // Appended Items must be multidimensional array.
       if ( is_array( $appended_endpoints ) ) {
@@ -186,9 +208,9 @@ class Api_Settings_Page {
    *
    * @since 1.0.0
    */
-  public function get_settings_page_list() {
-    $list = $this->get_api_endpoints_list();
-    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/templates/api-settings-page-list.php';
+  public function get_settings_page_general() {
+    $list = $this->get_settings_page_data_general();
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/templates/settings-page-general.php';
     unset( $list );
   }
 
@@ -197,8 +219,10 @@ class Api_Settings_Page {
    *
    * @since 1.0.0
    */
-  public function get_settings_page_rebuild() {
-    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/templates/api-settings-page-rebuild.php';
+  public function get_settings_page_items() {
+    $list = $this->get_settings_page_data_items();
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/templates/settings-page-items.php';
+    unset( $list );
   }
 
   /**
@@ -206,47 +230,10 @@ class Api_Settings_Page {
    *
    * @since 1.0.0
    */
-  public function get_settings_page_data_list() {
-    $list = $this->get_api_endpoints_data_list();
-    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/templates/api-settings-page-data-list.php';
+  public function get_settings_page_list() {
+    $list = $this->get_settings_page_data_list();
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/templates/settings-page-list.php';
     unset( $list );
   }
 
-  /**
-   * Ajax function to rebuild all data transients
-   *
-   * @since 1.0.0
-   */
-  public function djc_rebuild_all_transients_ajax() {
-    $page = new Page\Page();
-    $general_helper = new General_Helpers\General_Helper();
-
-    if ( ! isset( $_POST['djcRebuildNonce'] ) && ! wp_verify_nonce( sanitize_key( $_POST['djcRebuildNonce'] ), 'djc_rebuild_nonce_action' ) ) {
-      wp_send_json( $general_helper->set_msg_array( 'error', 'Check your nonce!' ) );
-    }
-
-    $page->set_all_pages_transient();
-
-    wp_send_json( $general_helper->set_msg_array( 'success', 'Success in rebuilding transients for cache!' ) );
-  }
-
-  /**
-   * Ajax function to rebuild all data list transients
-   *
-   * @since 1.0.0
-   */
-  public function djc_rebuild_data_list_transients_ajax() {
-    $action_filter = $_REQUEST['actionFilter'];
-    $transient_name = $_REQUEST['transientName'];
-    $data_list = new Page\Data_List();
-    $general_helper = new General_Helpers\General_Helper();
-
-    if ( ! isset( $_POST['djcRebuildNonce'] ) && ! wp_verify_nonce( sanitize_key( $_POST['djcRebuildNonce'] ), 'djc_rebuild_nonce_action' ) ) {
-      wp_send_json( $general_helper->set_msg_array( 'error', 'Check your nonce!' ) );
-    }
-
-    $data_list->set_transient( $action_filter, $transient_name );
-
-    wp_send_json( $general_helper->set_msg_array( 'success', 'Success in rebuilding transients for cache!' ) );
-  }
 }

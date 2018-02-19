@@ -41,19 +41,26 @@ If you had content when installing this plugin you won't have any JSON for this 
 
 We included several hooks that you can use to extend the functionality of the plugin:
 
+Menu:
 * `djc_set_menu_positions` - set all of the available menu positions on you page, and set the appropriate endpoint. The return value has to be array.
 * `djc_remove_menu_prefix_slash` - remove prefix slash in menu items, accepts boolean. Default is true.
-* `djc_set_posts_slug` - change the page slug for your blog posts. Default is 'blog'
-* `djc_set_featured_image` - override the post featured image for post json
-* `djc_set_tags` - override the post tags for post json
-* `djc_set_category` - override the post category for post json
-* `djc_set_post_format` - override the post format for post json
-* `djc_set_page_template` - override the page template for page json
-* `djc_set_custom_fields` - override the custom fields to json
-* `djc_set_post_append` - append new data to json. The return value has to be array with key and value.
-* `djc_set_allowed_post_types` - set post types you want to use. Default is 'post', 'page'. The return value has to be array.
-* `djc_append_endpoints_list` - append data to default endpoints list to show on API's List setting page. The return value has to be multidimensional array with title and url key.
-* `djc_set_data_list_args` - set Wp_Query arguments you want to use. The return value has to be array.
+* `djc_set_menu_posts_slug` - change the page slug for your blog posts. Default is 'blog'
+* `djc_set_general_endpoint` - 
+
+Items:
+* `djc_set_items_featured_image` - override the post featured image for post json
+* `djc_set_items_tags` - override the post tags for post json
+* `djc_set_items_category` - override the post category for post json
+* `djc_set_items_post_format` - override the post format for post json
+* `djc_set_items_page_template` - override the page template for page json
+* `djc_set_items_custom_fields` - override the custom fields to json
+* `djc_set_items_append` - append new data to json. The return value has to be array with key and value.
+* `djc_set_items_allowed_post_types` - set post types you want to use. Default is 'post', 'page'. The return value has to be array.
+* `djc_set_items_endpoint` - 
+
+List:
+* `djs_set_lists_endpoint_query` - set Wp_Query arguments you want to use. The return value has to be array.
+* `djs_set_lists_endpoint` - Add data to Lists settings page to show on API's List setting page. The return value has to be multidimensional array with title and url key.
 
 == Changelog ==
 
