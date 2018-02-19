@@ -61,7 +61,7 @@ Items:
 List:
 * `djs_set_lists_endpoint_query` - set Wp_Query arguments you want to use in list. The return value has to be array with default WP Query arguments. Action-filter value from `djs_set_lists_endpoint` hook must be prepended to the `djs_set_lists_endpoint_query` hook. Check details in the example.
 * `djs_set_lists_endpoint` - Add new items the settings page list. The return value has to be array with keys: title, action-filter.
-* `djc_remove_lists_updating` - Remove action to update items on change.
+* `djc_remove_lists_updating` - Remove action to update list on change.
 
 djs_set_lists_endpoint_query and djs_set_lists_endpoint go in combination.
 Example:
