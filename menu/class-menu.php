@@ -70,31 +70,7 @@ class Menu {
    * @since 1.0.0
    */
   public function get_menu_positions() {
-    return apply_filters( 'djc_set_menu_positions', $this->set_default_menu_positions() );
-  }
-
-  /**
-   * Set default menu positions
-   *
-   * @return array
-   *
-   * @since 1.0.0
-   */
-  public function set_default_menu_positions() {
-    return array(
-        'header_main_nav' => esc_html__( 'Main Menu', 'decoupled_json_content' ),
-    );
-  }
-
-  /**
-   * Register All Menu positions
-   *
-   * @since 1.0.0
-   */
-  public function register_menu_positions() {
-    register_nav_menus(
-      $this->get_menu_positions()
-    );
+    return get_registered_nav_menus();
   }
 
   /**
@@ -155,7 +131,7 @@ class Menu {
       $url = rtrim( $url, '/' );
 
       // Remove first slash.
-      if( $prefix_slash ) {
+      if ( $prefix_slash ) {
         $url = ltrim( $url, '/' );
       }
 
@@ -193,9 +169,9 @@ class Menu {
     $menu_output = array();
     foreach ( $menu_positions as $menu_position_key => $menu_position_value ) {
       $menu_output[] = array(
-          'name'  => $menu_position_value,
-          'slug'  => $menu_position_key,
-          'items' => $this->get_assigned_filtered_menu_items( $menu_position_key ),
+          'name'     => $menu_position_value,
+          'position' => $menu_position_key,
+          'items'    => $this->get_assigned_filtered_menu_items( $menu_position_key ),
       );
     }
 
