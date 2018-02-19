@@ -148,7 +148,6 @@ class Main {
     $menu = new Menu\Menu( $this->get_plugin_info() );
 
     // Menues.
-    $this->loader->add_action( 'after_setup_theme', $menu, 'register_menu_positions' );
     $this->loader->add_action( 'admin_head', $menu, 'set_page_transient' );
     $this->loader->add_action( 'wp_update_nav_menu', $menu, 'clear_cache' );
 
