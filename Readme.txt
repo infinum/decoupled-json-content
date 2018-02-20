@@ -41,17 +41,50 @@ If you had content when installing this plugin you won't have any JSON for this 
 
 We included several hooks that you can use to extend the functionality of the plugin:
 
-* `djc_remove_menu_prefix_slash` - remove prefix slash in menu items, accepts boolean. Default is true.
-* `djc_set_posts_slug` - change the page slug for your blog posts. Default is 'blog'
-* `djc_set_featured_image` - override the post featured image for post json
-* `djc_set_tags` - override the post tags for post json
-* `djc_set_category` - override the post category for post json
-* `djc_set_post_format` - override the post format for post json
-* `djc_set_page_template` - override the page template for page json
-* `djc_set_custom_fields` - override the custom fields to json
-* `djc_set_post_append` - append new data to json. The return value has to be array with key and value.
-* `djc_set_allowed_post_types` - set post types you want to use. Default is 'post', 'page'. The return value has to be array.
-* `djc_append_endpoints_list` - append data to default endpoints list to show on API's List setting page. The return value has to be multidimensional array with title and url key.
+Menu:
+* `djc_remove_menu_prefix_slash` - Remove prefix slash in menu items, accepts boolean. Default is true.
+* `djc_set_menu_posts_slug` - Change the page slug for your blog posts. Default is 'blog'
+* `djc_set_general_endpoint` - Add new items the settings page general. The return value has to be array with keys: title, url and note(optional).
+
+Items:
+* `djc_set_items_featured_image` - Override the items featured image.
+* `djc_set_items_tags` - Override the items tags.
+* `djc_set_items_category` - Override the items category.
+* `djc_set_items_post_format` - Override the items format.
+* `djc_set_items_page_template` - Override the items template.
+* `djc_set_items_custom_fields` - Override the items custom fields.
+* `djc_set_items_append` - Append new data to items. The return value has to be array with key and value.
+* `djc_set_items_allowed_post_types` - Set post types you want to use of items. Default is 'post', 'page'. The return value has to be array.
+* `djc_set_items_endpoint` - Add new items the settings page items. The return value has to be array with keys: title, url and note(optional).
+* `djc_remove_items_updating` - Remove action to update items on change.
+
+List:
+* `djs_set_lists_endpoint_query` - set Wp_Query arguments you want to use in list. The return value has to be array with default WP Query arguments. Action-filter value from `djs_set_lists_endpoint` hook must be prepended to the `djs_set_lists_endpoint_query` hook. Check details in the example.
+* `djs_set_lists_endpoint` - Add new items the settings page list. The return value has to be array with keys: title, action-filter.
+* `djc_remove_lists_updating` - Remove action to update list on change.
+
+djs_set_lists_endpoint_query and djs_set_lists_endpoint go in combination.
+Example:
+```php
+function new_enpodint_function($default) {
+  $default[] = 
+    array(
+    'title'         => 'New List',
+    'action-filter' => 'new_action_filter',
+  );
+  return $default;
+}
+add_filter( 'djs_set_lists_endpoint', 'new_enpodint_function' );
+
+function new_args_function() {
+  return array(
+    'post_type'      => 'page',
+    'posts_per_page' => 1,
+  );
+}
+add_filter( 'djs_set_lists_endpoint_query_`new_action_filter`', 'new_args_function' );
+
+```
 
 == Changelog ==
 

@@ -81,7 +81,7 @@ class Menu {
    * @since  1.0.0
    */
   public function get_default_posts_slug() {
-    return apply_filters( 'djc_set_posts_slug', $this->posts_slug );
+    return apply_filters( 'djc_set_menu_posts_slug', $this->posts_slug );
   }
 
   /**

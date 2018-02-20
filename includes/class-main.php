@@ -14,6 +14,7 @@ namespace Decoupled_Json_Content\Includes;
 use Decoupled_Json_Content\Admin as Admin;
 use Decoupled_Json_Content\Menu as Menu;
 use Decoupled_Json_Content\Page as Page;
+use Decoupled_Json_Content\Data_List as Data_List;
 
 /**
  * The main start class.
@@ -85,6 +86,7 @@ class Main {
     $this->define_admin_hooks();
     $this->define_menu_hooks();
     $this->define_page_hooks();
+    $this->define_data_list_hooks();
   }
 
   /**
@@ -126,17 +128,8 @@ class Main {
     // Admin.
     $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts' );
 
-    $this->loader->add_action( 'manage_pages_custom_column', $admin, 'add_admin_columns_content', 10, 2 );
-    $this->loader->add_filter( 'manage_pages_columns', $admin, 'add_admin_columns' );
-    $this->loader->add_action( 'manage_posts_custom_column', $admin, 'add_admin_columns_content', 10, 2 );
-    $this->loader->add_filter( 'manage_posts_columns', $admin, 'add_admin_columns' );
-    $this->loader->add_filter( 'post_submitbox_misc_actions', $admin, 'add_publish_meta_options' );
-
     // Api settings page.
     $this->loader->add_action( 'admin_menu', $api_settings_page, 'register_settings_page' );
-    $this->loader->add_action( 'wp_ajax_nopriv_djc_rebuild_all_transients_ajax', $api_settings_page, 'djc_rebuild_all_transients_ajax' );
-    $this->loader->add_action( 'wp_ajax_djc_rebuild_all_transients_ajax', $api_settings_page, 'djc_rebuild_all_transients_ajax' );
-
   }
 
   /**
@@ -163,6 +156,34 @@ class Main {
 
     // Page.
     $this->loader->add_action( 'save_post', $page, 'update_page_transient' );
+
+    // Ajax callbacks.
+    $this->loader->add_action( 'wp_ajax_nopriv_djc_rebuild_items_transients_ajax', $page, 'djc_rebuild_items_transients_ajax' );
+    $this->loader->add_action( 'wp_ajax_djc_rebuild_items_transients_ajax', $page, 'djc_rebuild_items_transients_ajax' );
+
+    // Listing and single items.
+    $this->loader->add_action( 'manage_pages_custom_column', $page, 'add_admin_columns_content', 10, 2 );
+    $this->loader->add_filter( 'manage_pages_columns', $page, 'add_admin_columns' );
+    $this->loader->add_action( 'manage_posts_custom_column', $page, 'add_admin_columns_content', 10, 2 );
+    $this->loader->add_filter( 'manage_posts_columns', $page, 'add_admin_columns' );
+    $this->loader->add_filter( 'post_submitbox_misc_actions', $page, 'add_publish_meta_options' );
+  }
+
+  /**
+   * Register hooks for Data-List functionality
+   *
+   * @since 1.0.0
+   */
+  private function define_data_list_hooks() {
+    $data_list = new Data_List\Data_List( $this->get_plugin_info() );
+
+    // Data List.
+    $this->loader->add_action( 'save_post', $data_list, 'update_page_transient' );
+
+    // Ajax callbacks.
+    $this->loader->add_action( 'wp_ajax_nopriv_djc_rebuild_lists_transients_ajax', $data_list, 'djc_rebuild_lists_transients_ajax' );
+    $this->loader->add_action( 'wp_ajax_djc_rebuild_lists_transients_ajax', $data_list, 'djc_rebuild_lists_transients_ajax' );
+
   }
 
   /**

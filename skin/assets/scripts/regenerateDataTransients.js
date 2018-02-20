@@ -10,10 +10,24 @@ export default class RegenerateDataTransients {
     this.$msg = $(this.msgSelector);
   }
 
-  rebuild() {
+  rebuild(filter, type) {
+    let actionFilter = '';
+
+    if (typeof filter !== 'undefined') {
+      actionFilter = filter;
+    }
+
+    let postType = '';
+
+    if (typeof type !== 'undefined') {
+      postType = type;
+    }
+
     const data = {
       action: this.ajaxAction,
       djcRebuildNonce: this.$nonceField.val(),
+      actionFilter,
+      postType,
     };
     
     $.post(djcLocalization.ajaxurl, data, (response) => {

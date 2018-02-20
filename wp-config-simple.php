@@ -16,3 +16,5 @@ if ( ! isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
 
 $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] ); // WPCS: XSS ok, sanitization ok.
 require_once( $parse_uri[0] . 'wp-load.php' );
+require( $parse_uri[0] . WPINC . '/formatting.php' );
+
