@@ -8,7 +8,6 @@
 
 namespace Decoupled_Json_Content\Data_List;
 
-// use Decoupled_Json_Content\Admin as Admin;
 use Decoupled_Json_Content\Page as Page;
 use Decoupled_Json_Content\Helpers as General_Helpers;
 
@@ -122,7 +121,7 @@ class Data_List {
   public function get_default_args() {
     return array(
       'post_type'      => 'post',
-      'posts_per_page' => 10000,
+      'posts_per_page' => 5000,
       'post_status'    => 'publish'
     );
   }

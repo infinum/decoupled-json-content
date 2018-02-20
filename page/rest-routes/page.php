@@ -38,7 +38,7 @@ if ( isset( $_GET['type'] ) && ! empty( $_GET['type'] ) ) { // WPCS: input var o
 $cache = get_transient( $page->get_page_cache_name_by_slug( $post_slug, $post_type ) );
 
 if ( $cache === false ) {
-  wp_send_json( $general_helper->set_msg_array( 'error', 'Error, there is a problem with your configuration or pages/posts are it is not cached correctly. Please check your configuration, rebuilding cache and try again!' ) );
+  wp_send_json( $general_helper->set_msg_array( 'error', 'Error, there is a problem with your configuration or pages/posts are not cached correctly. Please check your configuration, rebuild the cache and try again!' ) );
 }
 
 wp_send_json( json_decode( $cache ) );

@@ -157,7 +157,7 @@ class Api_Settings_Page {
         array(
             'title' => 'Individual Item',
             'url' => get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/page/rest-routes/page.php?slug=&type=',
-            'note' => wp_kses_post( 'Transient data is set on post/page/custom_post_type save. <br/>Cache updated on post/page/custom_post_type save or on rebuild button on this <a href="' . get_home_url() . '/wp-admin/admin.php?page=' . $this->settings_page_items_slug . '">link.</a>.', 'decoupled_json_content' ),
+            'note' => wp_kses_post( __( 'Transient data is set on post/page/custom_post_type save. <br/>Cache updated on post/page/custom_post_type save or on Rebuild Items button.', 'decoupled_json_content' ) ),
         ),
     );
 

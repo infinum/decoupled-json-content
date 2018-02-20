@@ -579,7 +579,7 @@ class Page {
     global $post;
 
     if ( $this->is_post_type_allowed_to_save( $post->post_type ) ) {
-      echo wp_kses_post( '<div class="misc-pub-section">' . $this->get_enpoint_link( $post->ID ) . '</div>' );
+      printf( '<div class="misc-pub-section">%s</div>', wp_kses_post( $this->get_enpoint_link( $post->ID ) ) );
     }
   }
 }

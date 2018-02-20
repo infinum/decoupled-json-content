@@ -24,12 +24,15 @@
           $title = $general_helper->get_array_value( 'title', $list_item );
         ?>
         <?php if ( ! empty( $post_type && $action_filter && $title ) ) { ?>
+          <?php
+            $endpoint_url = get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/data-list/rest-routes/data-list.php?post-type=' . $post_type . '&filter=' . $action_filter;
+          ?>
           <li>
-            <a href="<?php echo esc_url( get_home_url() . '/wp-content/plugins/' . $this->plugin_name . '/data-list/rest-routes/data-list.php?post-type=' . $post_type . '&filter=' . $action_filter ); ?>"target="_blank" rel="noopener noreferrer">
+            <a href="<?php echo esc_url( $endpoint_url ); ?>" target="_blank" rel="noopener noreferrer">
               <?php esc_html_e( 'Endpoint', 'decoupled_json_content' ); ?>
             </a>
             &nbsp;
-            <button class="js-djc-rebuild-data-list button-primary" data-action-filter="<?php echo esc_html( $action_filter ); ?>" data-post-type="<?php echo esc_html( $post_type ); ?>">
+            <button class="js-djc-rebuild-data-list button-primary" data-action-filter="<?php echo esc_attr( $action_filter ); ?>" data-post-type="<?php echo esc_attr( $post_type ); ?>">
               <?php echo esc_html( $title ); ?>
             </button>
           </li>
