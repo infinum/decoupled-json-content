@@ -49,7 +49,7 @@ define( 'DJC_PLUGIN_NAME', 'decoupled-json-content' );
  * @since 1.0.0
  * @package decoupled_json_content
  */
-include_once( 'lib/autoloader.php' );
+require_once 'lib/autoloader.php';
 
 /**
  * The code that runs during plugin deactivation.

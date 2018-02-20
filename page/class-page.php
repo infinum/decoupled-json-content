@@ -154,7 +154,7 @@ class Page {
     }
 
     $page_output = '';
-    $args = array(
+    $args        = array(
         'name'           => $post_slug,
         'post_type'      => $post_type,
         'posts_per_page' => 1,
@@ -166,8 +166,8 @@ class Page {
     if ( $the_query->have_posts() ) {
       while ( $the_query->have_posts() ) {
         $the_query->the_post();
-        $post_id = $the_query->post->ID;
-        $post_type = $the_query->post->post_type;
+        $post_id     = $the_query->post->ID;
+        $post_type   = $the_query->post->post_type;
         $page_output = (array) $the_query->post;
 
         $featured_image = apply_filters( 'djc_set_items_featured_image', $this->get_featured_image( $post_id ) );
@@ -575,7 +575,7 @@ class Page {
    *
    * @since 1.0.0
    */
-  function add_publish_meta_options() {
+  public function add_publish_meta_options() {
     global $post;
 
     if ( $this->is_post_type_allowed_to_save( $post->post_type ) ) {

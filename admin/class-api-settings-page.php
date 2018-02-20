@@ -210,7 +210,7 @@ class Api_Settings_Page {
    * @since 1.0.0
    */
   public function get_settings_page_general() {
-    $list = $this->get_settings_page_data_general();
+    $list           = $this->get_settings_page_data_general();
     $general_helper = new General_Helpers\General_Helper();
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/templates/settings-page-general.php';
     unset( $list );
@@ -222,7 +222,7 @@ class Api_Settings_Page {
    * @since 1.0.0
    */
   public function get_settings_page_items() {
-    $list = $this->get_settings_page_data_items();
+    $list           = $this->get_settings_page_data_items();
     $general_helper = new General_Helpers\General_Helper();
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/templates/settings-page-items.php';
     unset( $list );
@@ -234,7 +234,7 @@ class Api_Settings_Page {
    * @since 1.0.0
    */
   public function get_settings_page_list() {
-    $list = $this->get_settings_page_data_list();
+    $list           = $this->get_settings_page_data_list();
     $general_helper = new General_Helpers\General_Helper();
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/templates/settings-page-list.php';
     unset( $list );

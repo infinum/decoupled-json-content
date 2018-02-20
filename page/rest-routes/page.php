@@ -14,11 +14,11 @@ use Decoupled_Json_Content\Helpers as General_Helpers;
 use Decoupled_Json_Content\Page as Page;
 
 
-require_once( '../../wp-config-simple.php' );
-require_once( '../class-page.php' );
-require_once( '../../helpers/class-general-helper.php' );
+require_once '../../wp-config-simple.php';
+require_once '../class-page.php';
+require_once '../../helpers/class-general-helper.php';
 
-$page = new Page\Page();
+$page           = new Page\Page();
 $general_helper = new General_Helpers\General_Helper();
 
 // Check slug.

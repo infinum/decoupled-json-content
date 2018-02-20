@@ -44,7 +44,7 @@ function autoloader( $class_name ) {
 
   $file_count = count( $file_path );
   for ( $i = 1; $i < $file_count - 1; $i++ ) {
-    $dir = str_ireplace( '_', '-', strtolower( $file_path[ $i ] ) );
+    $dir                   = str_ireplace( '_', '-', strtolower( $file_path[ $i ] ) );
     $fully_qualified_path .= trailingslashit( $dir );
   }
 
@@ -52,6 +52,6 @@ function autoloader( $class_name ) {
 
   // Now we include the file.
   if ( file_exists( $fully_qualified_path ) ) {
-    require_once( $fully_qualified_path );
+    require_once $fully_qualified_path;
   }
 }

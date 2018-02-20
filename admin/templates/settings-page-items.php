@@ -18,9 +18,9 @@
     <ul>
       <?php foreach ( $list as $list_item ) { ?>
         <?php
-          $url = $general_helper->get_array_value( 'url', $list_item );
+          $url   = $general_helper->get_array_value( 'url', $list_item );
           $title = $general_helper->get_array_value( 'title', $list_item );
-          $note = $general_helper->get_array_value( 'note', $list_item );
+          $note  = $general_helper->get_array_value( 'note', $list_item );
         ?>
         <?php if ( ! empty( $url && $title ) ) { ?>
           <li>
