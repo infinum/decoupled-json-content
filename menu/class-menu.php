@@ -196,7 +196,7 @@ class Menu {
    */
   public function set_page_transient() {
     $cache_name = $this->menu_cache_name;
-    $cache = get_transient( $cache_name );
+    $cache      = get_transient( $cache_name );
 
     if ( $cache === false ) {
       $cache = $this->get_json_menus();

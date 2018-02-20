@@ -19,9 +19,9 @@
     <ul>
       <?php foreach ( $list as $list_item ) { ?>
         <?php
-          $post_type = $general_helper->get_array_value( 'post-type', $list_item );
+          $post_type     = $general_helper->get_array_value( 'post-type', $list_item );
           $action_filter = $general_helper->get_array_value( 'action-filter', $list_item );
-          $title = $general_helper->get_array_value( 'title', $list_item );
+          $title         = $general_helper->get_array_value( 'title', $list_item );
         ?>
         <?php if ( ! empty( $post_type && $action_filter && $title ) ) { ?>
           <?php

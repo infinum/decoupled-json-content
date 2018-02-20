@@ -12,11 +12,11 @@ namespace Decoupled_Json_Content\Menu;
 
 use Decoupled_Json_Content\Helpers as General_Helpers;
 
-require_once( '../../wp-config-simple.php' );
-require_once( '../class-menu.php' );
-require_once( '../../helpers/class-general-helper.php' );
+require_once '../../wp-config-simple.php';
+require_once '../class-menu.php';
+require_once '../../helpers/class-general-helper.php';
 
-$menu = new Menu();
+$menu           = new Menu();
 $general_helper = new General_Helpers\General_Helper();
 
 $cache = get_transient( $menu->menu_cache_name );
