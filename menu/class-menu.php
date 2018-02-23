@@ -136,7 +136,8 @@ class Menu {
       }
 
       // Expolode url to get last item.
-      $slug = end( explode( '/', $url ) );
+      $url_array = explode( '/', $url );
+      $slug      = end( $url_array );
 
       $menu_items_oputput[] = array(
           'id'          => $menu_item->ID,
