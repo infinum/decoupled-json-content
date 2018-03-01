@@ -18,6 +18,8 @@ require_once( '../class-data-list.php' );
 require_once( '../../page/class-page.php' );
 require_once( '../../helpers/class-general-helper.php' );
 
+header( 'Access-Control-Allow-Origin: *' );
+
 $data_list = new Data_List\Data_List();
 $general_helper = new General_Helpers\General_Helper();
 

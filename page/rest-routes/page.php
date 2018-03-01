@@ -18,6 +18,8 @@ require_once '../../wp-config-simple.php';
 require_once '../class-page.php';
 require_once '../../helpers/class-general-helper.php';
 
+header( 'Access-Control-Allow-Origin: *' );
+
 $page           = new Page\Page();
 $general_helper = new General_Helpers\General_Helper();
 

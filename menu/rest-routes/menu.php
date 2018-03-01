@@ -16,6 +16,8 @@ require_once '../../wp-config-simple.php';
 require_once '../class-menu.php';
 require_once '../../helpers/class-general-helper.php';
 
+header( 'Access-Control-Allow-Origin: *' );
+
 $menu           = new Menu();
 $general_helper = new General_Helpers\General_Helper();
 
