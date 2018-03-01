@@ -68,6 +68,10 @@ class General_Helper {
    * @since 1.0.0
    */
   public function set_msg_array( $status = null, $msg = null, $data = null ) {
+    if ( $status === 'error' ) {
+      http_response_code( 400 );
+    }
+
     return array(
         'status' => $status,
         'msg' => $msg,
