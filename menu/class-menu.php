@@ -139,6 +139,10 @@ class Menu {
       $url_array = explode( '/', $url );
       $slug      = end( $url_array );
 
+      if ( empty( $url ) ) {
+        $url = '/';
+      }
+
       $menu_items_oputput[] = array(
           'id'          => $menu_item->ID,
           'title'       => $menu_item->title,
