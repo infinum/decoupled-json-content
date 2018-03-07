@@ -116,8 +116,6 @@ class Menu {
     $menu_items_oputput = array();
     foreach ( $menu_items as $menu_item ) {
 
-      // var_dump($menu_item);
-
       // Filter hook to remove prefix slash.
       $prefix_slash = apply_filters( 'djc_remove_menu_prefix_slash', true );
 
