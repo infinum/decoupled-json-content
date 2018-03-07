@@ -116,6 +116,8 @@ class Menu {
     $menu_items_oputput = array();
     foreach ( $menu_items as $menu_item ) {
 
+      // var_dump($menu_item);
+
       // Filter hook to remove prefix slash.
       $prefix_slash = apply_filters( 'djc_remove_menu_prefix_slash', true );
 
@@ -135,10 +137,16 @@ class Menu {
         $url = ltrim( $url, '/' );
       }
 
-      // Expolode url to get last item.
-      $url_array = explode( '/', $url );
-      $slug      = end( $url_array );
+      // If is custom link just output url.
+      if( $menu_item->object === 'custom' ) {
+        $slug = $menu_item->url;
+      } else {
+        // If is internal find post slug.
+        $slug = get_post($menu_item->object_id);
+        $slug = $slug->post_name;
+      }
 
+      // If empty add slash on the end, for home page.
       if ( empty( $url ) ) {
         $url = '/';
       }
