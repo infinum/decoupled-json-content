@@ -8,7 +8,7 @@
  * Used and modified code from https://github.com/tommcfarlin/namespaces-and-autoloading-in-wordpress
  *
  * @since   1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 
 namespace Decoupled_Json_Content\Lib;

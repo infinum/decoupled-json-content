@@ -2,17 +2,17 @@
 /**
  * Plugin main file
  *
- * @link              https://infinum.co/
+ * @link              https://eightshift.com/
  * @since             1.0.0
- * @package           decoupled_json_content
+ * @package           Decoupled_Json_Content
  *
  * @wordpress-plugin
  * Plugin Name:       Decoupled JSON Content
- * Plugin URI:        https://infinum.co/
- * Description:       A faster alternative to the default REST API provided by WordPress for the usage with decoupled (headless) WordPress approach
+ * Plugin URI:        https://wordpress.org/plugins/decoupled-json-content/
+ * Description:       A faster alternative to the default REST API provided by WordPress for the usage by decoupled (headless) WordPress approach
  * Version:           1.0.0
  * Author:            Infinum WordPress Team
- * Author URI:        https://infinum.co/
+ * Author URI:        https://eightshift.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       decoupled_json_content
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Plugin version global
  *
  * @since 1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 define( 'DJC_PLUGIN_VERSION', '1.0.0' );
 
@@ -39,7 +39,7 @@ define( 'DJC_PLUGIN_VERSION', '1.0.0' );
  * Plugin name global
  *
  * @since 1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 define( 'DJC_PLUGIN_NAME', 'decoupled-json-content' );
 
@@ -47,7 +47,7 @@ define( 'DJC_PLUGIN_NAME', 'decoupled-json-content' );
  * Include the autoloader so we can dynamically include the rest of the classes.
  *
  * @since 1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 require_once 'lib/autoloader.php';
 

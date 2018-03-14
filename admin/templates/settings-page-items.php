@@ -3,7 +3,7 @@
  * Provide a admin area view for the plugin
  *
  * @since 1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 
 ?>
@@ -24,7 +24,7 @@
         ?>
         <?php if ( ! empty( $url && $title ) ) { ?>
           <li>
-            <a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer"> 
+            <a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer">
               <?php echo wp_kses_post( $title ); ?>
             </a>
             <?php if ( ! empty( $note ) ) { ?>

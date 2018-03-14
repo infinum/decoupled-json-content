@@ -2,7 +2,7 @@
 /**
  * Index file for security
  *
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 
 ?>

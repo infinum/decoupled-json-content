@@ -3,7 +3,7 @@
  * Fired when the plugin is uninstalled.
  *
  * @since   1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 
 // If uninstall not called from WordPress, then exit.

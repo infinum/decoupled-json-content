@@ -1,6 +1,7 @@
 # Decoupled JSON Content
+
 **Contributors**: dingo_bastard, mustra  
-**Donate link**: https://infinum.co/  
+**Donate link**: https://eightshift.com/  
 **Tags**: json, decoupled, json, content, content, json content, react, angular, speed, fast json  
 **Tested up to**: 4.9.4  
 **Stable tag**: 1.0.0  
@@ -9,7 +10,7 @@
 **License**: GPLv2 or later  
 **License URI**: http://www.gnu.org/licenses/gpl-2.0.html  
 
-A faster alternative to the default REST API provided by WordPress for the usage with decoupled (headless) WordPress approach
+A faster alternative to the default REST API provided by WordPress for the usage by decoupled (headless) WordPress approach
 
 ## Description
 
@@ -108,10 +109,6 @@ JSON post parser is maintained and sponsored by
 ## License
 
 Decoupled JSON Content is Copyright © 2017 Infinum. It is free software, and may be redistributed under the terms specified in the LICENSE file.
-
-## Upgrade Notice
-
-Fixes rare fatal error when using debug log
 
 ## Donate
 
