@@ -136,7 +136,7 @@ class Menu {
       }
 
       // If is custom link just output url.
-      if( $menu_item->object === 'custom' ) {
+      if ( $menu_item->object === 'custom' ) {
         $slug = $menu_item->url;
       } else {
         // If is internal find post slug.
