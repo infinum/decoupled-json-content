@@ -5,7 +5,7 @@
  * Route location: /wp-content/plugins/decoupled-json-content/page/rest-routes/list.php?post_type=post_type&posts_per_page=posts_per_page
  *
  * @since   1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 
 namespace Decoupled_Json_Content\Data_List\Rest_Routes;

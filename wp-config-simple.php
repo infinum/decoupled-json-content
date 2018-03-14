@@ -3,7 +3,7 @@
  * Create simple wp configuration for Rest API routes
  *
  * @since 1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  *
  * TO DO: Move this to a separate method or something like this.
  */

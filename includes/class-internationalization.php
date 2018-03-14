@@ -6,7 +6,7 @@
  * so that it is ready for translation.
  *
  * @since   1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 
 namespace Decoupled_Json_Content\Includes;

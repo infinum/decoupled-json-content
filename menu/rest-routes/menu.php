@@ -5,7 +5,7 @@
  * Route location: /wp-content/plugins/decoupled-json-content/menu/rest-routes/menu.php
  *
  * @since   1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 
 namespace Decoupled_Json_Content\Menu;

@@ -3,7 +3,7 @@
  * The Data_List-specific functionality of the plugin.
  *
  * @since   1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 
 namespace Decoupled_Json_Content\Data_List;
@@ -237,7 +237,7 @@ class Data_List {
 
         // Regex to find transient matching post type.
         if( preg_match( '/^' . $transient_name  . '/', $key ) ) {
-          
+
           // Strip string to get action filter name.
           $action_filter = str_replace( $transient_name, '', $key );
 

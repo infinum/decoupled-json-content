@@ -3,7 +3,7 @@
  * The API settings page specific functionality.
  *
  * @since   1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 
 namespace Decoupled_Json_Content\Admin;

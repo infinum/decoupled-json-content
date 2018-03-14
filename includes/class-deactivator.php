@@ -4,7 +4,7 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since   1.0.0
- * @package decoupled_json_content
+ * @package Decoupled_Json_Content
  */
 
 namespace Decoupled_Json_Content\Includes;
