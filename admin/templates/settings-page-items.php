@@ -39,8 +39,8 @@
   <hr/>
   <h3><?php esc_html_e( 'Rebuilding Transient cache!', 'decoupled_json_content' ); ?></h3>
   <div class="js-djc-msg"></div>
-  <p><?php esc_html_e( 'This action will rebild and cache all pages/posts and custom post types in the database.', 'decoupled_json_content' ); ?></p>
-  <p><strong><?php esc_html_e( 'Use this action with caution. It can be veary heavy if there are a lot of data.', 'decoupled_json_content' ); ?></strong></p>
+  <p><?php esc_html_e( 'This action will rebuild and cache all pages/posts and custom post types in the database.', 'decoupled_json_content' ); ?></p>
+  <p><strong><?php esc_html_e( 'Use this action with caution. It can be very heavy if there are a lot of data.', 'decoupled_json_content' ); ?></strong></p>
   <?php wp_nonce_field( 'djc_rebuild_items_nonce_action', 'djc_rebuild_items_nonce' ); ?>
   <button class="js-djc-rebuild button-primary"><?php esc_html_e( 'Rebuild Items', 'decoupled_json_content' ); ?></button>
 </div>
