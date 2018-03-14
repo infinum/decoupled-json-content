@@ -486,13 +486,9 @@ class Page {
             return false;
           }
 
-          $cache = get_transient( $cache_name );
+          $cache = $this->get_json_page( $post_slug, $post_type );
 
-          if ( $cache === false ) {
-            $cache = $this->get_json_page( $post_slug, $post_type );
-
-            set_transient( $cache_name, $cache, 0 );
-          }
+          set_transient( $cache_name, $cache, 0 );
         }
         wp_reset_postdata();
       }

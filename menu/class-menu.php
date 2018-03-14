@@ -140,7 +140,7 @@ class Menu {
         $slug = $menu_item->url;
       } else {
         // If is internal find post slug.
-        $slug = get_post($menu_item->object_id);
+        $slug = get_post( $menu_item->object_id );
         $slug = $slug->post_name;
       }
 
